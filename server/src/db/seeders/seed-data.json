@@ -1,0 +1,182 @@
+{
+  "_contrato": "Datos semilla de la HU-1. Las contraseñas se generan con bcrypt al cargar: todas son Tfc2026!",
+  "usuarios": [
+    {
+      "id": "u-001",
+      "rol": "estudiante",
+      "estado": "activo",
+      "nombres": "Rosa Elena",
+      "apellidos": "Quispe Mendoza",
+      "correo": "rquispe@aloe.ulima.edu.pe",
+      "telefono": "987654321",
+      "carrera": "Ingeniería de Sistemas",
+      "ciclo": "Décimo",
+      "codigoAlumno": "20211357",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": false
+      },
+      "creadoEn": "2026-08-10T09:12:00",
+      "ultimoIngreso": "2026-09-06T08:12:00"
+    },
+    {
+      "id": "u-002",
+      "rol": "estudiante",
+      "estado": "activo",
+      "nombres": "Diego Alonso",
+      "apellidos": "Ramírez Puente",
+      "correo": "dramirez@aloe.ulima.edu.pe",
+      "telefono": "",
+      "carrera": "Ingeniería de Sistemas",
+      "ciclo": "Décimo",
+      "codigoAlumno": "20210984",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": false
+      },
+      "creadoEn": "2026-08-11T10:00:00",
+      "ultimoIngreso": null
+    },
+    {
+      "id": "u-003",
+      "rol": "estudiante",
+      "estado": "bloqueado",
+      "motivoBloqueo": "Retiro del semestre 2026-2 solicitado en Registro Académico el 02/09/2026.",
+      "nombres": "Jorge Luis",
+      "apellidos": "Tapia Bendezú",
+      "correo": "jtapia@aloe.ulima.edu.pe",
+      "telefono": "",
+      "carrera": "Ingeniería Industrial",
+      "ciclo": "Décimo",
+      "codigoAlumno": "20210771",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": false
+      },
+      "creadoEn": "2026-08-12T11:30:00",
+      "ultimoIngreso": "2026-09-01T17:40:00"
+    },
+    {
+      "id": "u-004",
+      "rol": "estudiante",
+      "estado": "activo",
+      "nombres": "Diana Carolina",
+      "apellidos": "Rojas Ttito",
+      "correo": "drojas@aloe.ulima.edu.pe",
+      "telefono": "912345678",
+      "carrera": "Ingeniería Industrial",
+      "ciclo": "Décimo",
+      "codigoAlumno": "20210466",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": true
+      },
+      "creadoEn": "2026-08-10T15:00:00",
+      "ultimoIngreso": "2026-09-05T19:02:00"
+    },
+    {
+      "id": "u-005",
+      "rol": "estudiante",
+      "estado": "sin_verificar",
+      "nombres": "Bruno Matías",
+      "apellidos": "Palomino Chávez",
+      "correo": "bpalomino@aloe.ulima.edu.pe",
+      "telefono": "",
+      "carrera": "Ingeniería de Sistemas",
+      "ciclo": "Noveno",
+      "codigoAlumno": "20211044",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": false
+      },
+      "creadoEn": "2026-09-05T18:40:00",
+      "ultimoIngreso": null
+    },
+    {
+      "id": "u-101",
+      "rol": "asesor",
+      "estado": "activo",
+      "nombres": "Mariela",
+      "apellidos": "Quispe Ramos",
+      "correo": "mquispe@ulima.edu.pe",
+      "telefono": "",
+      "gradoAcademico": "Doctor",
+      "departamento": "Ingeniería de Sistemas",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": true
+      },
+      "creadoEn": "2026-07-20T09:00:00",
+      "ultimoIngreso": "2026-09-06T07:50:00"
+    },
+    {
+      "id": "u-102",
+      "rol": "asesor",
+      "estado": "activo",
+      "nombres": "Julio César",
+      "apellidos": "Vargas Aliaga",
+      "correo": "jvargas@ulima.edu.pe",
+      "telefono": "",
+      "gradoAcademico": "Magíster",
+      "departamento": "Ingeniería Industrial",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": false
+      },
+      "creadoEn": "2026-07-21T09:00:00",
+      "ultimoIngreso": "2026-09-04T12:10:00"
+    },
+    {
+      "id": "u-103",
+      "rol": "asesor",
+      "estado": "pendiente_validacion",
+      "nombres": "Andrés",
+      "apellidos": "Chávez Ninahuanca",
+      "correo": "achavez@ulima.edu.pe",
+      "telefono": "",
+      "gradoAcademico": "Magíster",
+      "departamento": "Ingeniería Industrial",
+      "notificaciones": {
+        "entregables": true,
+        "retroalimentacion": true,
+        "resumenSemanal": false
+      },
+      "creadoEn": "2026-09-04T10:15:00",
+      "ultimoIngreso": null
+    },
+    {
+      "id": "u-201",
+      "rol": "coordinador",
+      "estado": "activo",
+      "nombres": "Carmen Rosa",
+      "apellidos": "Velásquez Ayala",
+      "correo": "cvelasquez@ulima.edu.pe",
+      "telefono": "",
+      "cargo": "Coordinación TFC",
+      "notificaciones": {
+        "entregables": false,
+        "retroalimentacion": false,
+        "resumenSemanal": true
+      },
+      "creadoEn": "2026-07-01T08:00:00",
+      "ultimoIngreso": "2026-09-06T08:30:00"
+    }
+  ],
+  "invitaciones": [
+    {
+      "codigo": "INV-7K2P-94QX",
+      "correo": "lmorales@ulima.edu.pe",
+      "invitadoPor": "u-201",
+      "creadaEn": "2026-09-03T10:00:00",
+      "venceEn": "2026-12-31T23:59:00",
+      "usada": false
+    }
+  ]
+}

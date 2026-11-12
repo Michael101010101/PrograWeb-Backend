@@ -1,0 +1,28 @@
+{
+  "name": "tfc-server",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:create": "sequelize-cli db:create --options-path .sequelizerc.cjs",
+    "db:migrate": "sequelize-cli db:migrate --options-path .sequelizerc.cjs",
+    "db:seed": "sequelize-cli db:seed:all --options-path .sequelizerc.cjs",
+    "db:reset": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs && sequelize-cli db:migrate:undo:all --options-path .sequelizerc.cjs && sequelize-cli db:migrate --options-path .sequelizerc.cjs && sequelize-cli db:seed:all --options-path .sequelizerc.cjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^4.22.3",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^10.3.1",
+    "pg": "^8.23.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8"
+  },
+  "type": "module",
+  "devDependencies": {
+    "sequelize-cli": "^6.6.5"
+  }
+}
