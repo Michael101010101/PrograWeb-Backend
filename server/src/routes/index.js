@@ -4,6 +4,8 @@ import cuentaRoutes from './cuenta.routes.js';
 import invitacionesRoutes from './invitaciones.routes.js';
 import usuariosRoutes from './usuarios.routes.js';
 import periodoRoutes from './periodo.routes.js';
+import entregablesRoutes from './entregables.routes.js';
+import planesRoutes from './planes.routes.js';
 import { CATALOGOS } from '../config/catalogos.js';
 
 // Punto único donde cada historia monta sus rutas.
@@ -20,6 +22,10 @@ router.use('/invitaciones', invitacionesRoutes);
 
 // HU-7 · Administración de usuarios (servicio expuesto por HU-1)
 router.use('/usuarios', usuariosRoutes);
+
+// HU-4 · Plan de entregables
+router.use('/entregables', entregablesRoutes); // estudiante
+router.use('/planes', planesRoutes); // asesor
 
 // HU-2 a HU-7: router.use('/trabajos', trabajosRoutes); …
 
