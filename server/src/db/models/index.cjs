@@ -18,6 +18,11 @@ const db = {};
   require('./intentoLogin.cjs'),
   require('./periodo.cjs'),
   require('./etapa.cjs'),
+  // HU-4 · Plan de entregables
+  require('./entregable.cjs'),
+  require('./avance.cjs'),
+  require('./ampliacion.cjs'),
+  require('./requisito.cjs'),
 ].forEach((definir) => {
   const modelo = definir(sequelize, Sequelize.DataTypes);
   db[modelo.name] = modelo;
