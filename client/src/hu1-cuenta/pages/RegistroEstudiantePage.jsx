@@ -10,7 +10,7 @@ import { PasswordField, SelectField, TextField } from '../../shared/components/F
 import useFormulario from '../components/useFormulario.js';
 import DemoLink from '../components/DemoLink.jsx';
 import * as authService from '../services/authService.js';
-import { catalogos } from '../../shared/config/catalogos.js';
+import { useDatos } from '../../shared/context/DatosContext.jsx';
 import { validarRegistroEstudiante } from '../utils/validators.js';
 
 const INICIAL = {
@@ -19,6 +19,7 @@ const INICIAL = {
 };
 
 export default function RegistroEstudiantePage() {
+  const { catalogos } = useDatos();
   const navigate = useNavigate();
   const { mostrar } = useToast();
   const form = useFormulario(INICIAL, validarRegistroEstudiante);

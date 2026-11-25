@@ -10,7 +10,7 @@ import { TextField } from '../../shared/components/FormField.jsx';
 import DemoLink from '../components/DemoLink.jsx';
 import * as authService from '../services/authService.js';
 import { fechaHora } from '../../shared/utils/formato.js';
-import { PERIODO } from '../../shared/config/periodo.js';
+import { useDatos } from '../../shared/context/DatosContext.jsx';
 
 const ETIQUETA = {
   vigente: ['success', 'Vigente'],
@@ -21,6 +21,7 @@ const ETIQUETA = {
 
 /** Coordinación: invitar a otra persona a crear una cuenta de coordinador. */
 export default function InvitacionesPage() {
+  const { periodo: PERIODO } = useDatos();
   const { usuario } = useAuth();
   const { mostrar } = useToast();
   const [lista, setLista] = useState(null);
