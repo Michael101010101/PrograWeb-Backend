@@ -16,7 +16,12 @@ export const env = {
   },
   jwtSecret: obligatoria('JWT_SECRET'),
   jwtExpira: process.env.JWT_EXPIRA ?? '8h',
-  clientUrl: process.env.CLIENT_URL ?? 'http://localhost:5173',
+  // CLIENT_URL acepta varias URLs separadas por comas (producción, vistas previas, localhost).
+  // La primera se usa para armar los enlaces de los correos.
+  clientUrls: (process.env.CLIENT_URL ?? 'http://localhost:5173').split(',').map((u) => u.trim().replace(/\/$/, '')).filter(Boolean),
+  get clientUrl() {
+    return this.clientUrls[0];
+  },
   exponerEnlaces: process.env.EXPONER_ENLACES === 'true',
   smtp: {
     host: process.env.SMTP_HOST,
