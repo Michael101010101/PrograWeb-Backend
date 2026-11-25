@@ -9,11 +9,11 @@ const router = Router();
 router.use(autenticar, autorizar('asesor'));
 
 router.get('/', asincrono(c.listarPlanes));
-router.get('/:codigo', asincrono(c.obtenerPlan));
-router.post('/:codigo/entregables', asincrono(c.crearEntregable));
-router.put('/:codigo/entregables/:id', asincrono(c.editarEntregable));
-router.delete('/:codigo/entregables/:id', asincrono(c.eliminarEntregable));
-router.post('/:codigo/plantilla', asincrono(c.aplicarPlantilla));
-router.patch('/:codigo/ampliaciones/:id', asincrono(c.responderAmpliacion));
+router.get('/:trabajoId', asincrono(c.obtenerPlan));
+router.post('/:trabajoId/entregables', asincrono(c.crearEntregable));
+router.put('/:trabajoId/entregables/:id', asincrono(c.editarEntregable));
+router.delete('/:trabajoId/entregables/:id', asincrono(c.eliminarEntregable));
+router.post('/:trabajoId/plantilla', asincrono(c.aplicarPlantilla));
+router.patch('/:trabajoId/ampliaciones/:id', asincrono(c.responderAmpliacion));
 
 export default router;

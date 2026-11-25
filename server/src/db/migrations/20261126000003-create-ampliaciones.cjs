@@ -4,9 +4,9 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ampliaciones', {
-      id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+      id: { type: Sequelize.STRING(20), primaryKey: true, allowNull: false },
       entregableId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(20),
         allowNull: false,
         references: { model: 'entregables', key: 'id' },
         onDelete: 'CASCADE',

@@ -26,30 +26,30 @@ export async function listarPlanes(req, res) {
 }
 
 export async function obtenerPlan(req, res) {
-  res.json(await servicio.planDelAsesor(req.usuario, req.params.codigo));
+  res.json(await servicio.planDelAsesor(req.usuario, req.params.trabajoId));
 }
 
 export async function crearEntregable(req, res) {
-  const plan = await servicio.guardarEntregable(req.usuario, req.params.codigo, req.body);
+  const plan = await servicio.guardarEntregable(req.usuario, req.params.trabajoId, req.body);
   res.status(201).json({ plan, mensaje: 'Entregable agregado al plan.' });
 }
 
 export async function editarEntregable(req, res) {
-  const plan = await servicio.guardarEntregable(req.usuario, req.params.codigo, req.body, req.params.id);
+  const plan = await servicio.guardarEntregable(req.usuario, req.params.trabajoId, req.body, req.params.id);
   res.json({ plan, mensaje: 'Entregable actualizado.' });
 }
 
 export async function eliminarEntregable(req, res) {
-  const plan = await servicio.eliminarEntregable(req.usuario, req.params.codigo, req.params.id);
+  const plan = await servicio.eliminarEntregable(req.usuario, req.params.trabajoId, req.params.id);
   res.json({ plan, mensaje: 'Entregable eliminado.' });
 }
 
 export async function aplicarPlantilla(req, res) {
-  const plan = await servicio.aplicarPlantilla(req.usuario, req.params.codigo);
+  const plan = await servicio.aplicarPlantilla(req.usuario, req.params.trabajoId);
   res.status(201).json({ plan, mensaje: 'Se cargó la plantilla del ciclo.' });
 }
 
 export async function responderAmpliacion(req, res) {
-  const plan = await servicio.responderAmpliacion(req.usuario, req.params.codigo, req.params.id, req.body);
+  const plan = await servicio.responderAmpliacion(req.usuario, req.params.trabajoId, req.params.id, req.body);
   res.json({ plan, mensaje: req.body.aceptar ? 'Ampliación aceptada.' : 'Ampliación rechazada.' });
 }

@@ -1,26 +1,28 @@
 'use strict';
 
 /**
- * HU-4 · Avances: cada versión que sube el equipo para un entregable.
- * La revisión (aprobar u observar) la registra el asesor desde la HU-5: revisadoEn, comentario y revisorId.
+ * Avances: cada versión que sube el equipo para un entregable.
+ * La crea el estudiante desde la HU-4 (pantalla 4.3) y la revisa el asesor desde la HU-5:
+ * fechaRevision, resultado ('aprobado' | 'observado'), comentario y revisorId.
+ * resultado vacío (null) = la versión todavía está en revisión.
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('avances', {
-      id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+      id: { type: Sequelize.STRING(20), primaryKey: true, allowNull: false },
       entregableId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(20),
         allowNull: false,
         references: { model: 'entregables', key: 'id' },
         onDelete: 'CASCADE',
       },
       version: { type: Sequelize.INTEGER, allowNull: false },
-      fecha: { type: Sequelize.DATEONLY, allowNull: false },
+      fechaEntrega: { type: Sequelize.DATEONLY, allowNull: false },
       diasRetraso: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
-      estado: { type: Sequelize.STRING(20), allowNull: false, defaultValue: 'en_revision' },
       enlace: { type: Sequelize.STRING(500), allowNull: false },
       descripcion: { type: Sequelize.TEXT, allowNull: false },
-      revisadoEn: { type: Sequelize.DATEONLY },
+      fechaRevision: { type: Sequelize.DATEONLY },
+      resultado: { type: Sequelize.STRING(20) },
       comentario: { type: Sequelize.TEXT },
       revisorId: {
         type: Sequelize.STRING(20),
@@ -36,10 +38,10 @@ module.exports = {
       name: 'avances_version_unica',
     });
     await queryInterface.addConstraint('avances', {
-      fields: ['estado'],
+      fields: ['resultado'],
       type: 'check',
-      where: { estado: ['en_revision', 'observado', 'aprobado'] },
-      name: 'avances_estado_valido',
+      where: { resultado: ['aprobado', 'observado'] },
+      name: 'avances_resultado_valido',
     });
   },
 

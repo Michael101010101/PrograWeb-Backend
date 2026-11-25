@@ -5,8 +5,7 @@
 // para que el ejemplo siempre se vea como en los mockups: 3 entregables aprobados (55 %),
 // el 4.º vencido hace 7 días y un requisito por vencer en los próximos 14 días.
 //
-// Los trabajos son los de la HU-2: TFC-2026-2-047 (Rosa y Diego, asesora u-101)
-// y TFC-2026-2-012 (concluido, asesor u-102).
+// Los trabajos son los de la HU-2: t-047 (Rosa y Diego, asesora u-101) y t-012 (concluido, asesor u-102).
 
 function dias(n) {
   const fecha = new Date();
@@ -14,81 +13,73 @@ function dias(n) {
   return fecha.toLocaleDateString('en-CA', { timeZone: 'America/Lima' }); // AAAA-MM-DD
 }
 
-const PLAN_047 = [
-  { orden: 1, nombre: 'Plan de investigación', peso: 15, fechaLimite: dias(-80), descripcion: 'Problema, objetivos, justificación y cronograma.' },
-  { orden: 2, nombre: 'Marco teórico', peso: 20, fechaLimite: dias(-55), descripcion: 'Antecedentes sobre deserción universitaria y modelos predictivos.' },
-  { orden: 3, nombre: 'Diseño metodológico', peso: 20, fechaLimite: dias(-30), descripcion: 'Variables, muestra estratificada y técnica de validación.' },
-  { orden: 4, nombre: 'Resultados preliminares', peso: 20, fechaLimite: dias(-7), descripcion: 'Primeros resultados del modelo entrenado con la base 2022-2025, con matriz de confusión y métricas de precisión y recall.' },
-  { orden: 5, nombre: 'Informe final', peso: 25, fechaLimite: dias(20), descripcion: 'Documento completo con anexos de código.' },
+// 'e-006', 'e-007', … 'e-010'
+const idE = (n) => `e-${String(n).padStart(3, '0')}`;
+
+const NOMBRES = ['Plan de investigación', 'Marco teórico', 'Diseño metodológico', 'Resultados preliminares', 'Informe final'];
+const PESOS = [15, 20, 20, 20, 25];
+
+const ENTREGABLES = [
+  // t-047 · plan del mockup 4.1 / 4.2
+  { id: 'e-001', trabajoId: 't-047', orden: 1, fechaLimite: dias(-80), estado: 'aprobado', descripcion: 'Problema, objetivos, justificación y cronograma.' },
+  { id: 'e-002', trabajoId: 't-047', orden: 2, fechaLimite: dias(-55), estado: 'aprobado', descripcion: 'Antecedentes sobre deserción universitaria y modelos predictivos.' },
+  { id: 'e-003', trabajoId: 't-047', orden: 3, fechaLimite: dias(-30), estado: 'aprobado', descripcion: 'Variables, muestra estratificada y técnica de validación.' },
+  { id: 'e-004', trabajoId: 't-047', orden: 4, fechaLimite: dias(-7), estado: 'pendiente', descripcion: 'Primeros resultados del modelo entrenado con la base 2022-2025, con matriz de confusión y métricas de precisión y recall.' },
+  { id: 'e-005', trabajoId: 't-047', orden: 5, fechaLimite: dias(20), estado: 'pendiente', descripcion: 'Documento completo con anexos de código.' },
+  // t-012 · trabajo concluido, todo aprobado (plan en modo lectura)
+  ...[1, 2, 3, 4, 5].map((orden) => ({
+    id: idE(orden + 5),
+    trabajoId: 't-012',
+    orden,
+    fechaLimite: dias(-105 + orden * 15),
+    estado: 'aprobado',
+    descripcion: '',
+  })),
+].map((e) => ({ ...e, nombre: NOMBRES[e.orden - 1], peso: PESOS[e.orden - 1], obligatorio: true }));
+
+// [entregableId, versión, días desde hoy, resultado, descripción, comentario del asesor, revisor]
+const AVANCES = [
+  ['e-001', 1, -90, 'observado', 'Primera versión del plan.', 'Delimita mejor la población: solo primer ciclo.', 'u-101'],
+  ['e-001', 2, -86, 'observado', 'Población delimitada a primer ciclo.', 'Falta el cronograma por etapas.', 'u-101'],
+  ['e-001', 3, -82, 'aprobado', 'Se agregó el cronograma por etapas.', 'Plan aprobado.', 'u-101'],
+  ['e-002', 1, -58, 'aprobado', 'Marco teórico con 18 fuentes.', 'Buen marco teórico.', 'u-101'],
+  ['e-003', 1, -36, 'observado', 'Diseño metodológico inicial.', 'La muestra no es representativa por carrera.', 'u-101'],
+  ['e-003', 2, -32, 'aprobado', 'Muestra estratificada por carrera.', 'Metodología correcta. Pasa a resultados preliminares con la muestra estratificada por carrera.', 'u-101'],
+  // t-012: una versión aprobada por entregable, 3 días antes de su fecha límite
+  ...[1, 2, 3, 4, 5].map((orden) => [idE(orden + 5), 1, -108 + orden * 15, 'aprobado', 'Versión final.', 'Aprobado.', 'u-102']),
 ];
-
-const PLAN_012 = ['Plan de investigación', 'Marco teórico', 'Diseño metodológico', 'Resultados preliminares', 'Informe final'].map(
-  (nombre, i) => ({ orden: i + 1, nombre, peso: [15, 20, 20, 20, 25][i], fechaLimite: dias(-90 + i * 15), descripcion: '' })
-);
-
-// Versiones por número de entregable del 047: [versión, días desde hoy, estado, descripción, comentario de la asesora]
-const AVANCES_047 = {
-  1: [
-    [1, -90, 'observado', 'Primera versión del plan.', 'Delimita mejor la población: solo primer ciclo.'],
-    [2, -86, 'observado', 'Población delimitada a primer ciclo.', 'Falta el cronograma por etapas.'],
-    [3, -82, 'aprobado', 'Se agregó el cronograma por etapas.', 'Plan aprobado.'],
-  ],
-  2: [[1, -58, 'aprobado', 'Marco teórico con 18 fuentes.', 'Buen marco teórico.']],
-  3: [
-    [1, -36, 'observado', 'Diseño metodológico inicial.', 'La muestra no es representativa por carrera.'],
-    [2, -32, 'aprobado', 'Muestra estratificada por carrera.', 'Metodología correcta. Pasa a resultados preliminares con la muestra estratificada por carrera.'],
-  ],
-};
 
 module.exports = {
   async up(queryInterface) {
     const ahora = new Date();
-    const conFechas = (codigo) => (e) => ({ ...e, trabajoCodigo: codigo, obligatorio: true, creadoEn: ahora, actualizadoEn: ahora });
-    await queryInterface.bulkInsert('entregables', [...PLAN_047.map(conFechas('TFC-2026-2-047')), ...PLAN_012.map(conFechas('TFC-2026-2-012'))]);
+    await queryInterface.bulkInsert(
+      'entregables',
+      ENTREGABLES.map((e) => ({ ...e, creadoEn: ahora, actualizadoEn: ahora }))
+    );
 
-    // Ids que la base asignó a cada entregable: { 'TFC-2026-2-047-1': 1, … }
-    const [filas] = await queryInterface.sequelize.query('SELECT id, "trabajoCodigo", orden FROM entregables');
-    const idDe = (codigo, orden) => filas.find((f) => f.trabajoCodigo === codigo && f.orden === orden).id;
-
-    const avances = [];
-    for (const [orden, versiones] of Object.entries(AVANCES_047)) {
-      for (const [version, dia, estado, descripcion, comentario] of versiones) {
-        avances.push({
-          entregableId: idDe('TFC-2026-2-047', Number(orden)),
-          version,
-          fecha: dias(dia),
-          diasRetraso: 0,
-          estado,
-          enlace: `https://drive.google.com/file/d/047-entregable-${orden}-v${version}`,
-          descripcion,
-          revisadoEn: dias(dia + 2),
-          comentario,
-          revisorId: 'u-101',
-          creadoEn: ahora,
-        });
-      }
-    }
-    PLAN_012.forEach((e) => {
-      avances.push({
-        entregableId: idDe('TFC-2026-2-012', e.orden),
-        version: 1,
-        fecha: dias(-108 + e.orden * 15), // 3 días antes de su fecha límite
+    await queryInterface.bulkInsert(
+      'avances',
+      AVANCES.map(([entregableId, version, dia, resultado, descripcion, comentario, revisorId], i) => ({
+        id: `av-${String(i + 1).padStart(3, '0')}`,
+        entregableId,
+        version,
+        fechaEntrega: dias(dia),
         diasRetraso: 0,
-        estado: 'aprobado',
-        enlace: `https://drive.google.com/file/d/012-entregable-${e.orden}`,
-        descripcion: 'Versión final.',
-        revisadoEn: dias(-106 + e.orden * 15),
-        comentario: 'Aprobado.',
-        revisorId: 'u-102',
+        enlace: `https://drive.google.com/file/d/${entregableId}-v${version}`,
+        descripcion,
+        fechaRevision: dias(dia + 2),
+        resultado,
+        comentario,
+        revisorId,
         creadoEn: ahora,
-      });
-    });
-    await queryInterface.bulkInsert('avances', avances);
+      }))
+    );
 
     // Requisito administrativo del periodo activo (sale en "Próximos a vencer").
     const [[periodo]] = await queryInterface.sequelize.query('SELECT id FROM periodos WHERE activo = true LIMIT 1');
     await queryInterface.bulkInsert('requisitos', [
       {
+        id: 'r-001',
         periodoId: periodo.id,
         nombre: 'Entrega de informe impreso',
         detalle: 'Requisito administrativo de la oficina TFC · no tiene peso',

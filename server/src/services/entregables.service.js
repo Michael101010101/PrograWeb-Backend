@@ -51,14 +51,20 @@ function avancesDe(datos, entregableId) {
 /**
  * Estado que se muestra del entregable, calculado desde su último avance:
  *  sin avances          -> 'vencido' si ya pasó la fecha límite, si no 'pendiente'
- *  en revisión          -> 'con_retraso' si se entregó tarde, si no 'entregado'
- *  observado / aprobado -> el mismo estado de la revisión
+ *  en revisión          -> 'entregado_con_retraso' si se entregó tarde, si no 'entregado'
+ *  observado / aprobado -> el mismo resultado de la revisión
+ * En la tabla se guarda el mismo estado, salvo 'vencido' (se guarda 'pendiente': vencer depende de la fecha de hoy).
  */
 function estadoEntregable(datos, entregable, hoy) {
   const ultimo = avancesDe(datos, entregable.id).at(-1);
   if (!ultimo) return entregable.fechaLimite < hoy ? 'vencido' : 'pendiente';
-  if (ultimo.estado === 'en_revision') return ultimo.diasRetraso > 0 ? 'con_retraso' : 'entregado';
+  if (ultimo.estado === 'en_revision') return ultimo.diasRetraso > 0 ? 'entregado_con_retraso' : 'entregado';
   return ultimo.estado;
+}
+
+/** Estado que se guarda en la columna entregables.estado (acuerdo del grupo, lo lee la HU-7). */
+function estadoGuardado(estado) {
+  return estado === 'vencido' ? 'pendiente' : estado;
 }
 
 function estaBloqueado(datos, entregable, hoy) {
@@ -141,13 +147,13 @@ function vista(datos, hoy) {
 async function cargarComoEstudiante(usuario, entregableId) {
   const entregable = await repo.buscarEntregable(entregableId);
   if (!entregable) throw new HttpError(404, 'El entregable no existe.');
-  const datos = await repo.cargarPlan(entregable.trabajoCodigo);
+  const datos = await repo.cargarPlan(entregable.trabajoId);
   if (!datos?.trabajo.integrantes.includes(usuario.id)) throw new HttpError(403, 'Este entregable no es de tu trabajo.');
   return { datos, entregable };
 }
 
-async function cargarComoAsesor(usuario, codigo) {
-  const datos = await repo.cargarPlan(codigo);
+async function cargarComoAsesor(usuario, trabajoId) {
+  const datos = await repo.cargarPlan(trabajoId);
   // Si no es su asesorado se responde 404 (no se revela que el trabajo existe).
   if (!datos || datos.trabajo.asesor?.usuarioId !== usuario.id) throw new HttpError(404, 'Trabajo no encontrado.');
   return datos;
@@ -171,9 +177,9 @@ const texto = (valor) => String(valor ?? '').trim();
 
 /** GET /api/entregables/mi-plan */
 export async function planDelEstudiante(usuario) {
-  const codigo = await repo.codigoTrabajoDeEstudiante(usuario.id);
-  if (!codigo) return { trabajo: null };
-  return vista(await repo.cargarPlan(codigo), hoyEnLima());
+  const trabajoId = await repo.trabajoIdDeEstudiante(usuario.id);
+  if (!trabajoId) return { trabajo: null };
+  return vista(await repo.cargarPlan(trabajoId), hoyEnLima());
 }
 
 /** POST /api/entregables/:id/avances */
@@ -191,16 +197,19 @@ export async function registrarAvance(usuario, entregableId, body) {
   if (descripcion.length < 10) throw new HttpError(400, 'Describe lo entregado en al menos 10 caracteres.');
   if (descripcion.length > 600) throw new HttpError(400, 'La descripción no puede superar los 600 caracteres.');
 
-  await repo.crearAvance({
-    entregableId: entregable.id,
-    version: item.avances.length + 1, // la versión se calcula sola
-    fecha: hoy,
-    diasRetraso: Math.max(0, diasEntre(entregable.fechaLimite, hoy)),
-    estado: 'en_revision',
-    enlace,
-    descripcion,
-  });
-  return vista(await repo.cargarPlan(datos.trabajo.codigo), hoy);
+  const diasRetraso = Math.max(0, diasEntre(entregable.fechaLimite, hoy));
+  await repo.crearAvance(
+    {
+      entregableId: entregable.id,
+      version: item.avances.length + 1, // la versión se calcula sola
+      fecha: hoy,
+      diasRetraso,
+      enlace,
+      descripcion,
+    },
+    diasRetraso > 0 ? 'entregado_con_retraso' : 'entregado' // nuevo estado del entregable
+  );
+  return vista(await repo.cargarPlan(datos.trabajo.id), hoy);
 }
 
 /** POST /api/entregables/:id/ampliaciones */
@@ -225,7 +234,7 @@ export async function solicitarAmpliacion(usuario, entregableId, body) {
   if (motivo.length > 400) throw new HttpError(400, 'El motivo no puede superar los 400 caracteres.');
 
   await repo.crearAmpliacion({ entregableId: entregable.id, nuevaFecha, motivo, fecha: hoy, estado: 'pendiente' });
-  return vista(await repo.cargarPlan(datos.trabajo.codigo), hoy);
+  return vista(await repo.cargarPlan(datos.trabajo.id), hoy);
 }
 
 // ─────────── Asesor ───────────
@@ -236,25 +245,25 @@ export async function planesDelAsesor(usuario) {
   const lista = await repo.trabajosDeAsesor(usuario.id);
   return Promise.all(
     lista.map(async (t) => {
-      const v = vista(await repo.cargarPlan(t.codigo), hoy);
+      const v = vista(await repo.cargarPlan(t.id), hoy);
       return { trabajo: v.trabajo, entregables: v.items.length, suma: v.suma, avance: v.avance.porcentaje, ampliacionesPendientes: v.ampliacionesPendientes.length };
     })
   );
 }
 
-/** GET /api/planes/:codigo */
-export async function planDelAsesor(usuario, codigo) {
-  return vista(await cargarComoAsesor(usuario, codigo), hoyEnLima());
+/** GET /api/planes/:trabajoId */
+export async function planDelAsesor(usuario, trabajoId) {
+  return vista(await cargarComoAsesor(usuario, trabajoId), hoyEnLima());
 }
 
-/** POST /api/planes/:codigo/entregables  y  PUT /api/planes/:codigo/entregables/:id */
-export async function guardarEntregable(usuario, codigo, body, entregableId = null) {
+/** POST /api/planes/:trabajoId/entregables  y  PUT /api/planes/:trabajoId/entregables/:id */
+export async function guardarEntregable(usuario, trabajoId, body, entregableId = null) {
   const hoy = hoyEnLima();
-  const datos = await cargarComoAsesor(usuario, codigo);
+  const datos = await cargarComoAsesor(usuario, trabajoId);
   exigirEnDesarrollo(datos);
   const semestre = await semestreActivo();
 
-  const id = entregableId === null ? null : Number(entregableId);
+  const id = entregableId === null ? null : String(entregableId);
   const anterior = id === null ? null : datos.entregables.find((e) => e.id === id);
   if (id !== null && !anterior) throw new HttpError(404, 'El entregable no existe.');
   if (anterior && estadoEntregable(datos, anterior, hoy) === 'aprobado') {
@@ -284,27 +293,27 @@ export async function guardarEntregable(usuario, codigo, body, entregableId = nu
 
   const campos = { nombre, descripcion, fechaLimite, peso, obligatorio };
   if (anterior) await repo.actualizarEntregable(id, campos);
-  else await repo.crearEntregable({ ...campos, trabajoCodigo: codigo, orden: datos.entregables.length + 1 });
+  else await repo.crearEntregable({ ...campos, trabajoId, orden: datos.entregables.length + 1 });
 
-  return vista(await repo.cargarPlan(codigo), hoy);
+  return vista(await repo.cargarPlan(trabajoId), hoy);
 }
 
-/** DELETE /api/planes/:codigo/entregables/:id */
-export async function eliminarEntregable(usuario, codigo, entregableId) {
-  const datos = await cargarComoAsesor(usuario, codigo);
+/** DELETE /api/planes/:trabajoId/entregables/:id */
+export async function eliminarEntregable(usuario, trabajoId, entregableId) {
+  const datos = await cargarComoAsesor(usuario, trabajoId);
   exigirEnDesarrollo(datos);
-  const entregable = datos.entregables.find((e) => e.id === Number(entregableId));
+  const entregable = datos.entregables.find((e) => e.id === String(entregableId));
   if (!entregable) throw new HttpError(404, 'El entregable no existe.');
   if (avancesDe(datos, entregable.id).length > 0) {
     throw new HttpError(409, 'No se puede eliminar: el equipo ya registró avances en este entregable.');
   }
   await repo.eliminarEntregable(entregable); // también renumera el resto del plan
-  return vista(await repo.cargarPlan(codigo), hoyEnLima());
+  return vista(await repo.cargarPlan(trabajoId), hoyEnLima());
 }
 
-/** POST /api/planes/:codigo/plantilla */
-export async function aplicarPlantilla(usuario, codigo) {
-  const datos = await cargarComoAsesor(usuario, codigo);
+/** POST /api/planes/:trabajoId/plantilla */
+export async function aplicarPlantilla(usuario, trabajoId) {
+  const datos = await cargarComoAsesor(usuario, trabajoId);
   exigirEnDesarrollo(datos);
   if (datos.entregables.length > 0) throw new HttpError(409, 'La plantilla solo puede usarse cuando el plan está vacío.');
 
@@ -322,22 +331,39 @@ export async function aplicarPlantilla(usuario, codigo) {
   await repo.crearEntregables(
     PLANTILLA_CICLO.map((p, indice) => ({
       ...p,
-      trabajoCodigo: codigo,
+      trabajoId,
       orden: indice + 1,
       obligatorio: true,
       fechaLimite: fechaEn(Math.round(((indice + 1) * restantes) / PLANTILLA_CICLO.length)),
     }))
   );
-  return vista(await repo.cargarPlan(codigo), hoy);
+  return vista(await repo.cargarPlan(trabajoId), hoy);
 }
 
-/** PATCH /api/planes/:codigo/ampliaciones/:id   body: { aceptar: true | false } */
-export async function responderAmpliacion(usuario, codigo, ampliacionId, body) {
-  const datos = await cargarComoAsesor(usuario, codigo);
-  const solicitud = datos.ampliaciones.find((a) => a.id === Number(ampliacionId));
+/** PATCH /api/planes/:trabajoId/ampliaciones/:id   body: { aceptar: true | false } */
+export async function responderAmpliacion(usuario, trabajoId, ampliacionId, body) {
+  const datos = await cargarComoAsesor(usuario, trabajoId);
+  const solicitud = datos.ampliaciones.find((a) => a.id === String(ampliacionId));
   if (!solicitud) throw new HttpError(404, 'La solicitud no existe.');
   if (solicitud.estado !== 'pendiente') throw new HttpError(409, 'La solicitud ya fue respondida.');
   if (typeof body.aceptar !== 'boolean') throw new HttpError(400, 'Indica si aceptas o rechazas la solicitud.');
   await repo.responderAmpliacion(solicitud, body.aceptar); // si se acepta, cambia la fecha límite
-  return vista(await repo.cargarPlan(codigo), hoyEnLima());
+  return vista(await repo.cargarPlan(trabajoId), hoyEnLima());
+}
+
+// ─────────── Punto de integración con la HU-5 ───────────
+
+/**
+ * La HU-5 llama a esta función DESPUÉS de aprobar u observar una versión (de guardar fechaRevision,
+ * resultado, comentario y revisorId en la tabla avances). Recalcula y guarda el estado del entregable.
+ *   import { sincronizarEstado } from './entregables.service.js';
+ *   await sincronizarEstado(avance.entregableId);
+ */
+export async function sincronizarEstado(entregableId) {
+  const entregable = await repo.buscarEntregable(entregableId);
+  if (!entregable) throw new HttpError(404, 'El entregable no existe.');
+  const datos = await repo.cargarPlan(entregable.trabajoId);
+  const estado = estadoGuardado(estadoEntregable(datos, entregable, hoyEnLima()));
+  await repo.actualizarEstado(entregable.id, estado);
+  return estado;
 }

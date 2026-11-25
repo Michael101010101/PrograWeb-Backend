@@ -1,7 +1,8 @@
 'use strict';
+const { randomBytes } = require('crypto');
 const { Model } = require('sequelize');
 
-// HU-4 · Versión que sube el equipo. La HU-5 completa revisadoEn, comentario y revisorId.
+// Versión que sube el equipo (HU-4). La HU-5 completa fechaRevision, resultado, comentario y revisorId.
 module.exports = (sequelize, DataTypes) => {
   class Avance extends Model {
     static associate(db) {
@@ -12,15 +13,15 @@ module.exports = (sequelize, DataTypes) => {
 
   Avance.init(
     {
-      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-      entregableId: { type: DataTypes.INTEGER, allowNull: false },
+      id: { type: DataTypes.STRING(20), primaryKey: true, defaultValue: () => `av-${randomBytes(5).toString('hex')}` },
+      entregableId: { type: DataTypes.STRING(20), allowNull: false },
       version: { type: DataTypes.INTEGER, allowNull: false },
-      fecha: { type: DataTypes.DATEONLY, allowNull: false },
+      fechaEntrega: { type: DataTypes.DATEONLY, allowNull: false },
       diasRetraso: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-      estado: { type: DataTypes.STRING(20), allowNull: false, defaultValue: 'en_revision' },
       enlace: { type: DataTypes.STRING(500), allowNull: false },
       descripcion: { type: DataTypes.TEXT, allowNull: false },
-      revisadoEn: DataTypes.DATEONLY,
+      fechaRevision: DataTypes.DATEONLY,
+      resultado: DataTypes.STRING(20), // null = en revisión
       comentario: DataTypes.TEXT,
       revisorId: DataTypes.STRING(20),
     },

@@ -1,4 +1,5 @@
 'use strict';
+const { randomBytes } = require('crypto');
 const { Model } = require('sequelize');
 
 // HU-4 · Requisito administrativo del periodo (por ejemplo, la entrega del informe impreso).
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Requisito.init(
     {
-      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+      id: { type: DataTypes.STRING(20), primaryKey: true, defaultValue: () => `r-${randomBytes(5).toString('hex')}` },
       periodoId: { type: DataTypes.INTEGER, allowNull: false },
       nombre: { type: DataTypes.STRING(100), allowNull: false },
       detalle: { type: DataTypes.STRING(200), allowNull: false },

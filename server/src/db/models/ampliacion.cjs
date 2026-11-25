@@ -1,4 +1,5 @@
 'use strict';
+const { randomBytes } = require('crypto');
 const { Model } = require('sequelize');
 
 // HU-4 · Solicitud de ampliación de la fecha límite (pendiente → aceptada | rechazada).
@@ -11,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Ampliacion.init(
     {
-      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-      entregableId: { type: DataTypes.INTEGER, allowNull: false },
+      id: { type: DataTypes.STRING(20), primaryKey: true, defaultValue: () => `am-${randomBytes(5).toString('hex')}` },
+      entregableId: { type: DataTypes.STRING(20), allowNull: false },
       nuevaFecha: { type: DataTypes.DATEONLY, allowNull: false },
       motivo: { type: DataTypes.TEXT, allowNull: false },
       fecha: { type: DataTypes.DATEONLY, allowNull: false },
