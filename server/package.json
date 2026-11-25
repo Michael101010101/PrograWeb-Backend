@@ -24,5 +24,8 @@
   "type": "module",
   "devDependencies": {
     "sequelize-cli": "^6.6.5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

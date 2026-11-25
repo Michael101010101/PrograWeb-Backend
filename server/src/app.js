@@ -6,9 +6,10 @@ import { manejarErrores, rutaNoEncontrada } from './middlewares/manejarErrores.j
 
 const app = express();
 
-app.use(cors({ origin: env.clientUrl }));
+app.use(cors({ origin: env.clientUrls }));
 app.use(express.json());
 
+app.get('/', (_req, res) => res.json({ mensaje: 'API de Trabajos de Fin de Carrera funcionando', docs: '/api/salud' }));
 app.use('/api', rutas);
 
 app.use(rutaNoEncontrada);

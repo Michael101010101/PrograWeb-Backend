@@ -9,6 +9,8 @@ const base = {
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT ?? 5432),
   dialect: 'postgres',
+  // Se pasa el driver explícitamente para que Vercel lo incluya al empaquetar.
+  dialectModule: require('pg'),
   logging: false,
 };
 
