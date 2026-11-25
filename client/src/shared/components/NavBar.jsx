@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hu1-cuenta/context/AuthContext.jsx';
 import { useToast } from './ToastProvider.jsx';
 import { NAV_POR_ROL } from '../config/navegacion.js';
-import { PERIODO } from '../config/periodo.js';
+import { useDatos } from '../context/DatosContext.jsx';
 
 /**
  * Barra de navegación (56 px) propia de cada rol.
@@ -10,6 +10,7 @@ import { PERIODO } from '../config/periodo.js';
  * `info`: texto de la derecha; por defecto el semestre o la etapa en curso.
  */
 export default function NavBar({ extra, info }) {
+  const { periodo: PERIODO } = useDatos();
   const { usuario, cerrarSesion } = useAuth();
   const { mostrar } = useToast();
   const navigate = useNavigate();

@@ -1,22 +1,25 @@
 import PageLayout from '../../shared/components/PageLayout.jsx';
 import PageHead from '../../shared/components/PageHead.jsx';
-import { PERIODO, CONTACTO } from '../../shared/config/periodo.js';
+import { useDatos } from '../../shared/context/DatosContext.jsx';
 
 const ETIQUETA = { cerrada: ['success', 'Cerrada'], en_curso: ['warning', 'En curso'], pendiente: ['neutral', 'Próxima'] };
 
 export default function CronogramaPage() {
+  const { periodo: PERIODO, contacto: CONTACTO, textoNav, cargando, error } = useDatos();
   return (
-    <PageLayout navInfo={`Semestre ${PERIODO.semestre} · etapa 3 de 5 en curso`}>
+    <PageLayout navInfo={textoNav}>
       <PageHead migas="Inicio · Cronograma" titulo={`Cronograma ${PERIODO.semestre}`} descripcion="Fechas de cada etapa del proceso de trabajos de fin de carrera." />
       <div className="layout-aside">
         <section className="card">
           <ol className="cronograma">
-            {PERIODO.cronograma.map((c) => {
+            {cargando && <p className="text-muted">Cargando cronograma…</p>}
+            {error && <p className="text-muted">No se pudo cargar el cronograma: {error}</p>}
+            {PERIODO.etapas.map((c) => {
               const [tono, texto] = ETIQUETA[c.estado];
               return (
-                <li key={c.etapa} className={`is-${c.estado}`} style={{ paddingTop: 4, paddingBottom: 4 }}>
+                <li key={c.numero} className={`is-${c.estado}`} style={{ paddingTop: 4, paddingBottom: 4 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-                    <p className="text-label">Etapa {c.etapa}</p>
+                    <p className="text-label">Etapa {c.numero}</p>
                     <span className={`badge badge--${tono}`}>{texto}</span>
                   </div>
                   <h3 style={{ fontFamily: 'var(--font-body)', color: c.estado === 'pendiente' ? 'var(--muted)' : undefined }}>{c.nombre}</h3>
