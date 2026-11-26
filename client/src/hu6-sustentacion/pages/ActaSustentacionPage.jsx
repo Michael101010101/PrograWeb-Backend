@@ -197,7 +197,7 @@ export default function ActaSustentacionPage() {
               <li style={{ display: 'block' }}><strong>Asesor</strong> {trabajo.asesor}</li>
               <li style={{ display: 'block' }}><strong>Línea</strong> {trabajo.linea}</li>
               <li style={{ display: 'block' }}>
-                <strong>Avance del plan</strong> {Math.round((trabajo.entregables.aprobados / trabajo.entregables.total) * 100)}% · {trabajo.entregables.aprobados} de {trabajo.entregables.total} aprobados
+                <strong>Avance del plan</strong> {trabajo.entregables.total ? Math.round(100 * trabajo.entregables.aprobados / trabajo.entregables.total) + "%" : "Sin plan"} · {trabajo.entregables.aprobados} de {trabajo.entregables.total} aprobados
               </li>
             </ul>
           </section>

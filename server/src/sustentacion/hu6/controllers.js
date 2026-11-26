@@ -42,7 +42,7 @@ export async function programar(req,res) {
   const s = await transaccion(async (db) => {
     const d = await repo.obtenerDatos(db);
     const t = d.trabajos.find((x) => x.codigo === req.body?.trabajoCodigo);
-    if (!t || t.estado !== 'concluido' || t.entregables.aprobados !== t.entregables.total) errorHttp(new Error('El trabajo debe estar concluido y con entregables aprobados.'));
+    if (!t || t.estado !== 'concluido' || !t.entregables.total || t.entregables.aprobados !== t.entregables.total) errorHttp(new Error('El trabajo debe estar concluido y con entregables aprobados.'));
     // Dentro de la transacción con la tabla bloqueada: dos coordinadores no pueden obtener el mismo número.
     const id = siguienteIdSustentacion(d.sustentaciones.map((x) => x.id));
     const nuevos = validar(() => dominio.programarSustentacion(d, { ...req.body, id }));

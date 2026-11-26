@@ -11,13 +11,26 @@ export async function obtenerDatos(db, { usuarioId = null, rol = 'coordinador' }
   if (!admin && rol !== 'estudiante') throw Object.assign(new Error('Rol sin permisos para esta historia.'), { status: 403 });
 
   // Los datos referenciales están restringidos para que un estudiante solo vea su propio trabajo.
-  const filtroTrabajo = admin ? '' : ` WHERE t.codigo IN (SELECT trabajo_codigo FROM hu6.integrantes_ref WHERE usuario_id = $1)`;
+  const filtroTrabajo = admin ? '' : ` WHERE t.id IN (SELECT "trabajoId" FROM public.integrantes_trabajo WHERE "estudianteId" = $1)`;
   const params = admin ? [] : [usuarioId];
   const [d, t, e, c, r, s, j, a, n, h] = await Promise.all([
     db.query('SELECT * FROM hu6.docentes ORDER BY id'),
-    db.query('SELECT t.* FROM hu6.trabajos_ref t' + filtroTrabajo + ' ORDER BY t.codigo', params),
-    db.query('SELECT * FROM hu6.integrantes_ref ORDER BY id'),
-    db.query('SELECT * FROM hu6.conflictos_ref'),
+    db.query(`SELECT t.id, t.codigo, t.titulo, l.nombre AS linea, t.estado,
+      COALESCE(a.departamento, t.asesor->>'departamento', t.carrera) AS departamento,
+      d.id AS asesor_id, COALESCE(t.asesor->>'nombre', concat_ws(' ', a.titulo, a.nombres, a.apellidos)) AS asesor,
+      plan.aprobados, plan.total, t."cerradoEn"::date AS informe_aprobado_el
+      FROM public.trabajos t JOIN public.lineas_investigacion l ON l.id = t."lineaId"
+      LEFT JOIN public.asesores a ON a.id = t."asesorId"
+      LEFT JOIN hu6.docentes d ON d.usuario_id = COALESCE(a."usuarioId", t.asesor->>'id')
+      CROSS JOIN LATERAL (SELECT count(*)::int AS total,
+        (count(*) FILTER (WHERE item->>'estado' = 'aprobado'))::int AS aprobados
+        FROM jsonb_array_elements(CASE WHEN jsonb_typeof(t.plan) = 'array' THEN t.plan ELSE '[]'::jsonb END) item) plan
+      ` + filtroTrabajo + ' ORDER BY t.codigo', params),
+    db.query( `SELECT t.codigo AS trabajo_codigo, u.id AS usuario_id, concat_ws(' ', u.nombres, u.apellidos) AS nombre,
+      concat_ws(' ', split_part(u.nombres, ' ', 1), u.apellidos) AS corto, i."esResponsable" AS responsable
+      FROM public.integrantes_trabajo i JOIN public.trabajos t ON t.id=i."trabajoId"
+      JOIN public.usuarios u ON u.id=i."estudianteId" ORDER BY i.id`),
+    db.query('SELECT c.*, t.codigo AS trabajo_codigo FROM hu6.conflictos_trabajo c JOIN public.trabajos t ON t.id=c.trabajo_id'),
     db.query('SELECT * FROM hu6.reservas_sala'),
     db.query('SELECT * FROM public.sustentaciones ORDER BY "fecha","hora","id"'),
     db.query('SELECT * FROM hu6.jurados ORDER BY sustentacion_id, presidente DESC,docente_id'),
@@ -65,7 +78,7 @@ export async function obtenerDatos(db, { usuarioId = null, rol = 'coordinador' }
 
 export async function insertarProgramacion(db, s) {
   await db.query(`INSERT INTO public.sustentaciones ("id","trabajoId","estado","programadaEl","fecha","hora","salaId","modalidad","calificacion")
-    VALUES ($1,(SELECT id FROM hu6.trabajos_ref WHERE codigo=$2),$3,$4,$5,$6,$7,$8,$9)`,
+    VALUES ($1,(SELECT id FROM public.trabajos WHERE codigo=$2),$3,$4,$5,$6,$7,$8,$9)`,
     [s.id,s.trabajoCodigo,s.estado,s.programadaEl,s.fecha,s.hora,s.salaId,s.modalidad,s.calificacion ?? null]);
 }
 export async function actualizarProgramacion(db, s, anterior) {

@@ -54,7 +54,7 @@ export function trabajoDeEstudiante(datos, usuarioId) {
 // Trabajos concluidos que aún no tienen sustentación.
 export function trabajosPorProgramar(datos) {
   return datos.trabajos.filter((t) => (t.estado == null || t.estado === 'concluido') &&
-    t.entregables?.aprobados === t.entregables?.total && !sustentacionDeTrabajo(datos, t.codigo));
+    t.entregables?.total > 0 && t.entregables.aprobados === t.entregables?.total && !sustentacionDeTrabajo(datos, t.codigo));
 }
 
 // Números de la tarjeta "Sustentaciones del periodo".

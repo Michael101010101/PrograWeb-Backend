@@ -7,7 +7,7 @@ function baseFalsa() {
   const llamadas = [];
   const trabajo = { id: 't-012', codigo: 'TFC-2026-2-012', titulo: 'X', linea: 'L', departamento: 'D', estado: 'concluido', asesor_id: null, asesor: 'A', aprobados: 5, total: 5, informe_aprobado_el: '2026-11-24' };
   const tablas = [
-    ['FROM hu6.docentes', []], ['FROM hu6.trabajos_ref', [trabajo]], ['FROM hu6.integrantes_ref', []], ['FROM hu6.conflictos_ref', []],
+    ['FROM hu6.docentes', []], ['FROM public.trabajos t JOIN public.lineas', [trabajo]], ['FROM public.integrantes_trabajo', []], ['FROM hu6.conflictos_trabajo', []],
     ['FROM hu6.reservas_sala', []],
     ['FROM public.sustentaciones', [{ id: 's-001', trabajoId: 't-012', fecha: '2026-12-11', hora: '10:00:00', modalidad: 'Presencial', calificacion: 16, estado: 'realizada', salaId: 'A-402', programadaEl: '2026-09-02' }]],
     ['FROM hu6.jurados', []], ['FROM hu6.actas', []], ['FROM hu6.calificaciones', []], ['FROM hu6.historial_reprogramaciones', []],
