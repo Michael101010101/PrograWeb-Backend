@@ -90,6 +90,8 @@ function resumen(u, m) {
   return {
     id: u.id,
     nombreCompleto: nombreCompleto(u),
+    gradoAcademico: u.gradoAcademico ?? null,
+    departamento: u.departamento ?? null,
     correo: u.correo,
     estado: u.estado,
     lineas: m.lineas.get(u.id) ?? [],
@@ -173,8 +175,6 @@ export async function detalle(id) {
 
   return {
     ...resumen(asesor, metricas),
-    gradoAcademico: asesor.gradoAcademico ?? null,
-    departamento: asesor.departamento ?? null,
     experiencia: asesor.experiencia,
     periodo: vistaPeriodo(periodo),
     trabajos: trabajos.map((t) => ({
