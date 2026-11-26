@@ -18,6 +18,10 @@ const db = {};
   require('./intentoLogin.cjs'),
   require('./periodo.cjs'),
   require('./etapa.cjs'),
+  require('./lineaInvestigacion.cjs'),
+  require('./trabajo.cjs'),
+  require('./trabajoIntegrante.cjs'),
+  require('./trabajoHistorial.cjs'),
 ].forEach((definir) => {
   const modelo = definir(sequelize, Sequelize.DataTypes);
   db[modelo.name] = modelo;
