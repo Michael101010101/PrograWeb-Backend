@@ -7,6 +7,7 @@ import periodoRoutes from './periodo.routes.js';
 import trabajosRoutes from './trabajos.routes.js';
 import asesoresRoutes from './asesores.routes.js';
 import solicitudesRoutes from './solicitudes.routes.js';
+import adminRoutes from './admin.routes.js';
 import { CATALOGOS } from '../config/catalogos.js';
 
 // Punto único donde cada historia monta sus rutas.
@@ -23,6 +24,7 @@ router.use('/invitaciones', invitacionesRoutes);
 
 // HU-7 · Administración de usuarios (servicio expuesto por HU-1)
 router.use('/usuarios', usuariosRoutes);
+router.use('/admin', adminRoutes);
 
 // HU-2 · Registro del trabajo
 router.use('/trabajos', trabajosRoutes);
