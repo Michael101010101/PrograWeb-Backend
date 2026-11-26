@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
       Trabajo.hasMany(db.TrabajoIntegrante, { foreignKey: 'trabajoId', as: 'integrantes' });
       Trabajo.hasMany(db.TrabajoHistorial, { foreignKey: 'trabajoId', as: 'historial' });
       Trabajo.belongsTo(db.LineaInvestigacion, { foreignKey: 'lineaId', as: 'lineaInvestigacion' });
+      Trabajo.belongsTo(db.Asesor, { foreignKey: 'asesorId', as: 'asesorAsignado' });
+      Trabajo.hasMany(db.Solicitud, { foreignKey: 'trabajoCodigo', sourceKey: 'codigo', as: 'solicitudes' });
     }
   }
 
@@ -28,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: { isIn: [['propuesta', 'en_desarrollo', 'concluido', 'desistido']] },
       },
       asesor: DataTypes.JSONB,
+      asesorId: DataTypes.STRING(20),
+      porRevisar: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+      nota: DataTypes.JSONB,
       plan: DataTypes.JSONB,
       sustentacion: DataTypes.JSONB,
       periodoId: { type: DataTypes.INTEGER, allowNull: false },

@@ -227,7 +227,7 @@ export async function actualizarFicha(usuario, trabajoId, datos) {
       campos: { linea: 'No editable: ya tienes asesor en esta línea' },
     });
   }
-  await trabajos.actualizar(t.id, { ...limpio, lineaId });
+  await trabajos.actualizarPorId(t.id, { ...limpio, lineaId });
   return aVista(await trabajos.buscarPorId(t.id));
 }
 
@@ -292,7 +292,7 @@ export async function cambiarEstado(usuario, trabajoId, destino, motivo) {
 
   const ahora = new Date();
   await trabajos.enTransaccion(async (transaction) => {
-    await trabajos.actualizar(
+    await trabajos.actualizarPorId(
       t.id,
       {
         estado: destino,
@@ -312,7 +312,7 @@ export async function marcarEnDesarrollo(trabajoId, asesor, usuarioId) {
   const t = await obtenerOFallar(trabajoId);
   if (t.estado !== 'propuesta') throw new HttpError(409, 'Solo una propuesta puede pasar a en desarrollo.');
   await trabajos.enTransaccion(async (transaction) => {
-    await trabajos.actualizar(t.id, { estado: 'en_desarrollo', asesor }, transaction);
+    await trabajos.actualizarPorId(t.id, { estado: 'en_desarrollo', asesor }, transaction);
     await trabajos.agregarHistorial(
       t.id,
       { de: 'propuesta', a: 'en_desarrollo', motivo: `Asesoría aceptada por ${asesor?.nombre ?? 'el asesor'}`, fecha: new Date(), usuarioId },

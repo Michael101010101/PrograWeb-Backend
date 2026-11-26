@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import db from '../db/models/index.cjs';
 import { ESTADOS_VIGENTES } from '../config/trabajos.js';
 
-const { Trabajo, TrabajoIntegrante, TrabajoHistorial, Usuario, LineaInvestigacion, sequelize } = db;
+const { Trabajo, TrabajoIntegrante, TrabajoHistorial, Usuario, LineaInvestigacion, Asesor, sequelize } = db;
 
 const DATOS_USUARIO = ['id', 'nombres', 'apellidos', 'codigoAlumno', 'carrera', 'ciclo', 'estado'];
 
@@ -14,6 +14,7 @@ const INCLUIR = [
   },
   { model: TrabajoHistorial, as: 'historial' },
   { model: LineaInvestigacion, as: 'lineaInvestigacion', attributes: ['id', 'nombre'] },
+  { model: Asesor, as: 'asesorAsignado', attributes: ['id', 'usuarioId', 'titulo', 'nombres', 'apellidos', 'departamento', 'tiempoRevision'] },
 ];
 
 const ORDEN = [
@@ -25,14 +26,24 @@ const ORDEN = [
 function aObjeto(instancia) {
   if (!instancia) return null;
   // eslint-disable-next-line no-unused-vars
-  const { lineaInvestigacion, ...t } = instancia.get({ plain: true });
+  const { lineaInvestigacion, asesorAsignado, ...t } = instancia.get({ plain: true });
   return {
     ...t,
     registradoEn: t.fechaRegistro,
     linea: lineaInvestigacion?.nombre ?? null,
+    asesor: asesorAsignado
+      ? {
+          ...(t.asesor ?? {}),
+          id: asesorAsignado.usuarioId,
+          asesorId: asesorAsignado.id,
+          nombre: `${asesorAsignado.titulo} ${asesorAsignado.nombres} ${asesorAsignado.apellidos}`,
+          departamento: asesorAsignado.departamento,
+        }
+      : t.asesor,
     integrantes: (t.integrantes ?? []).map((i) => ({
       usuarioId: i.estudianteId,
       responsable: i.esResponsable,
+      nombre: i.usuario ? `${i.usuario.nombres} ${i.usuario.apellidos}` : '',
       usuario: i.usuario ?? null,
     })),
     historial: (t.historial ?? []).map(({ de, a, motivo, fecha, usuarioId }) => ({ de, a, motivo, fecha, usuarioId })),
@@ -43,17 +54,28 @@ export async function buscarPorId(id, opciones = {}) {
   return aObjeto(await Trabajo.findByPk(id, { include: INCLUIR, order: ORDEN, ...opciones }));
 }
 
-export async function buscarPorCodigo(codigo) {
-  return aObjeto(await Trabajo.findOne({ where: { codigo }, include: INCLUIR, order: ORDEN }));
+export async function buscarPorCodigo(codigo, opciones = {}) {
+  return aObjeto(await Trabajo.findOne({ where: { codigo }, include: INCLUIR, order: ORDEN, ...opciones }));
 }
 
-export async function listarDeAsesor(usuarioId) {
+export async function buscarDeEstudiante(usuarioId) {
+  return buscarVigentePorIntegrante(usuarioId);
+}
+
+export async function listarDeAsesor(asesorId) {
   const filas = await Trabajo.findAll({
-    where: { asesor: { id: usuarioId } },
+    where: { asesorId },
     include: INCLUIR,
-    order: [['fechaRegistro', 'DESC'], ...ORDEN],
+    order: [['codigo', 'DESC'], ...ORDEN],
   });
   return filas.map(aObjeto);
+}
+
+export async function actualizar(codigo, cambios, opciones = {}) {
+  const trabajo = await Trabajo.findOne({ where: { codigo }, ...opciones });
+  if (!trabajo) return null;
+  await trabajo.update(cambios, opciones);
+  return buscarPorCodigo(codigo, opciones);
 }
 
 async function idsDeIntegrante(usuarioId, transaction) {
@@ -123,7 +145,7 @@ export async function crear({ integrantes, historial, ...datos }, transaction) {
   return trabajo.id;
 }
 
-export async function actualizar(id, cambios, transaction) {
+export async function actualizarPorId(id, cambios, transaction) {
   await Trabajo.update(cambios, { where: { id }, transaction });
 }
 
