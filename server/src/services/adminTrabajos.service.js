@@ -42,13 +42,13 @@ function persona(u) {
 }
 
 /** TFC-<semestre>-<número del id>; si el id no es t-<n>, el sufijo va en mayúsculas. */
-function codigo(trabajo) {
+export function codigo(trabajo) {
   const sufijo = trabajo.id.startsWith('t-') ? trabajo.id.slice(2) : trabajo.id;
   return `TFC-${trabajo.periodo?.semestre ?? ''}-${sufijo.toUpperCase()}`;
 }
 
 /** Avance = peso aprobado / peso total, entero 0–100; 0 si no hay entregables. */
-function porcentaje({ pesoAprobado, pesoTotal }) {
+export function porcentaje({ pesoAprobado, pesoTotal }) {
   return pesoTotal > 0 ? Math.round((100 * pesoAprobado) / pesoTotal) : 0;
 }
 
