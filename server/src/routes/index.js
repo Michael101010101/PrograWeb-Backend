@@ -1,3 +1,4 @@
+import sustentaciones from '../sustentacion/hu6/routes/sustentacionesRoutes.js';
 import { Router } from 'express';
 import authRoutes from './auth.routes.js';
 import cuentaRoutes from './cuenta.routes.js';
@@ -11,6 +12,7 @@ const router = Router();
 
 router.get('/salud', (_req, res) => res.json({ estado: 'ok' }));
 router.get('/catalogos', (_req, res) => res.json(CATALOGOS));
+router.use('/hu6', sustentaciones);
 router.use('/periodo', periodoRoutes);
 
 // HU-1 · Cuenta y acceso
