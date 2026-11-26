@@ -16,3 +16,24 @@ Invitación de coordinación vigente: `/registro/coordinador?invitacion=INV-7K2P
 
 
 
+
+## HU-6: Sustentaciones
+
+En una copia nueva, instala las dependencias con `npm ci` tanto en `client/` como en `server/`.
+Configura `server/.env` a partir de `.env.example` con los datos de PostgreSQL y un JWT_SECRET propio.
+Para una base nueva, desde `server/` ejecuta `npm run db:create`, `npm run db:migrate` y `npm run db:seed`.
+Si la base del grupo ya tiene los datos de HU-2 y HU-3, ejecuta `npm run hu6:setup` desde `server/` con las variables de esa base. Aplica las migraciones pendientes y ejecuta únicamente el seeder de HU-6. Para una conexión que requiere DB_SSL configura también NODE_ENV=production. El servidor lee los trabajos y sus integrantes desde las tablas del grupo.
+
+La migración enlaza `public.sustentaciones."trabajoId"` con `public.trabajos(id)`. Si ya se ejecutó el SQL anterior, conserva las sustentaciones que coinciden por ID y código. Los registros de demostración sin correspondencia se archivan con su acta, jurado, notas e historial en `hu6.archivo_pre_integracion`. Se recomienda respaldar la base antes de migrar. El ejemplo actual utiliza t-012, programado según el seed de HU-2. HU-7 puede consultar la tabla con:
+
+```sql
+SELECT s.id, s."trabajoId", t.titulo, s.fecha, s.estado
+FROM public.sustentaciones s
+JOIN public.trabajos t ON t.id = s."trabajoId";
+```
+
+Inicia `npm run dev` desde `server/` y, en otra terminal, desde `client/`.
+Con la sesión del grupo, coordinación accede a `/admin/sustentaciones` y cada estudiante a `/estudiante/sustentacion`.
+La API se monta en `/api/hu6` y utiliza el JWT de HU-1. Las pruebas se ejecutan desde `server/` con `npm run hu6:test`.
+
+Para Vercel, selecciona la raíz del repositorio. La entrada api/index.mjs sirve la misma aplicación Express que en local. Configura las variables del servidor y CLIENT_URL para tu dominio, prepara PostgreSQL antes del primer uso y deja VITE_API_URL vacío para acceder a la API del mismo dominio.
