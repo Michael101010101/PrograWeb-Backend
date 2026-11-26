@@ -8,12 +8,9 @@ import periodoRoutes from './periodo.routes.js';
 import trabajosRoutes from './trabajos.routes.js';
 import asesoresRoutes from './asesores.routes.js';
 import solicitudesRoutes from './solicitudes.routes.js';
-<<<<<<< HEAD
 import adminRoutes from './admin.routes.js';
-=======
 import entregablesRoutes from './entregables.routes.js';
 import planesRoutes from './planes.routes.js';
->>>>>>> origin/main
 import { CATALOGOS } from '../config/catalogos.js';
 
 // Punto único donde cada historia monta sus rutas.

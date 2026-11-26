@@ -26,16 +26,13 @@ const db = {};
   require('./asesor.cjs'),
   require('./solicitud.cjs'),
   require('./historialAsesoria.cjs'),
-<<<<<<< HEAD
   require('./cupoAsesor.cjs'),
   require('./mensaje.cjs'),
-=======
   // HU-4 · Plan de entregables
   require('./entregable.cjs'),
   require('./avance.cjs'),
   require('./ampliacion.cjs'),
   require('./requisito.cjs'),
->>>>>>> origin/main
 ].forEach((definir) => {
   const modelo = definir(sequelize, Sequelize.DataTypes);
   db[modelo.name] = modelo;
