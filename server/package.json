@@ -10,7 +10,8 @@
     "db:create": "sequelize-cli db:create --options-path .sequelizerc.cjs",
     "db:migrate": "sequelize-cli db:migrate --options-path .sequelizerc.cjs",
     "db:seed": "sequelize-cli db:seed:all --options-path .sequelizerc.cjs",
-    "db:reset": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs && sequelize-cli db:migrate:undo:all --options-path .sequelizerc.cjs && sequelize-cli db:migrate --options-path .sequelizerc.cjs && sequelize-cli db:seed:all --options-path .sequelizerc.cjs"
+    "db:reset": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs && sequelize-cli db:migrate:undo:all --options-path .sequelizerc.cjs && sequelize-cli db:migrate --options-path .sequelizerc.cjs && sequelize-cli db:seed:all --options-path .sequelizerc.cjs",
+    "db:nube": "sequelize-cli db:migrate --env production --options-path .sequelizerc.cjs && sequelize-cli db:seed:all --env production --options-path .sequelizerc.cjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
