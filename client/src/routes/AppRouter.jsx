@@ -18,6 +18,10 @@ import MiCuentaPage from '../hu1-cuenta/pages/MiCuentaPage.jsx';
 import InvitacionesPage from '../hu1-cuenta/pages/InvitacionesPage.jsx';
 import NotFoundPage from '../hu1-cuenta/pages/NotFoundPage.jsx';
 
+// HU-4 · Plan de entregables
+import PlanEntregablesPage from '../hu4-entregables/pages/PlanEntregablesPage.jsx';
+import AlertasVencimientoPage from '../hu4-entregables/pages/AlertasVencimientoPage.jsx';
+import DefinirPlanPage from '../hu4-entregables/pages/DefinirPlanPage.jsx';
 import SustentacionesPage from '../hu6-sustentacion/pages/SustentacionesPage.jsx';
 import ProgramarSustentacionPage from '../hu6-sustentacion/pages/ProgramarSustentacionPage.jsx';
 import ConformarJuradoPage from '../hu6-sustentacion/pages/ConformarJuradoPage.jsx';
@@ -56,7 +60,8 @@ export default function AppRouter() {
       {/* Estudiante */}
       <Route path="/estudiante" element={<RutaProtegida roles={['estudiante']} />}>
         <Route path="mi-trabajo" element={<EnConstruccion titulo="Mi trabajo" historia="HU-2" />} />
-        <Route path="entregables" element={<EnConstruccion titulo="Plan de entregables" historia="HU-4" />} />
+        <Route path="entregables" element={<PlanEntregablesPage />} />
+        <Route path="entregables/alertas" element={<AlertasVencimientoPage />} />
         <Route path="retroalimentacion" element={<EnConstruccion titulo="Retroalimentación" historia="HU-5" />} />
         <Route path="asesores" element={<EnConstruccion titulo="Directorio de asesores" historia="HU-3" />} />
         <Route path="sustentacion" element={<MiSustentacionPage />} />
@@ -65,6 +70,7 @@ export default function AppRouter() {
       {/* Asesor */}
       <Route path="/asesor" element={<RutaProtegida roles={['asesor']} />}>
         <Route path="asesorados" element={<EnConstruccion titulo="Mis asesorados" historia="HU-3" />} />
+        <Route path="asesorados/:trabajoId/plan" element={<DefinirPlanPage />} />
         <Route path="solicitudes" element={<EnConstruccion titulo="Solicitudes recibidas" historia="HU-3" />} />
         <Route path="revision" element={<EnConstruccion titulo="Bandeja de revisión" historia="HU-5" />} />
         <Route path="ficha" element={<EnConstruccion titulo="Mi ficha de asesor" historia="HU-3" />} />
