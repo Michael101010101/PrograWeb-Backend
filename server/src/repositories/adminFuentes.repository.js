@@ -120,6 +120,22 @@ export async function avancesPorRevisar(asesorIds) {
   );
 }
 
+/** "2.4 días" → 2.4 · "3,1 días" → 3.1 · null o texto sin número → null. */
+function diasDeTexto(texto) {
+  const m = /^\s*(\d+(?:[.,]\d+)?)/.exec(String(texto ?? ''));
+  return m ? Number(m[1].replace(',', '.')) : null;
+}
+
+/**
+ * [{ asesorId, dias }] con el tiempo promedio de revisión de cada asesor.
+ * Por ahora sale de asesores.tiempoRevision (texto de HU-3); no consulta la base.
+ * Cuando HU-5 guarde las revisiones, se cambia por AVG(fechaRevision - fechaEntrega) de avances sin tocar los servicios.
+ * @param {{ id: string, tiempoRevision?: string | null }[]} asesores
+ */
+export async function tiemposRevision(asesores) {
+  return asesores.map((a) => ({ asesorId: a.id, dias: diasDeTexto(a.tiempoRevision) }));
+}
+
 /* ─────────── HU-6 · Sustentación ─────────── */
 
 /** "Presencial" → "presencial" (el front compara en minúsculas). */
