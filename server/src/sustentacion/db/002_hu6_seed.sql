@@ -1,5 +1,3 @@
--- Datos de prueba HU-6. Primero ejecutar 001_hu6_schema.sql.
-BEGIN;
 INSERT INTO hu6.docentes (id,usuario_id,titulo,nombres,apellidos,grado,departamento,jurados_previos) VALUES ('d-01', NULL, 'Dr.', 'Ricardo', 'Cárdenas Loayza', 'doctor', 'Ingeniería Civil', 1) ON CONFLICT DO NOTHING;
 INSERT INTO hu6.docentes (id,usuario_id,titulo,nombres,apellidos,grado,departamento,jurados_previos) VALUES ('d-02', NULL, 'Mg.', 'Sandra', 'Bustamante Ríos', 'magíster', 'Ingeniería Industrial', 2) ON CONFLICT DO NOTHING;
 INSERT INTO hu6.docentes (id,usuario_id,titulo,nombres,apellidos,grado,departamento,jurados_previos) VALUES ('d-03', NULL, 'Ing.', 'Luis Fernando', 'Ocampo Salas', 'ingeniero', 'Ingeniería Civil', 3) ON CONFLICT DO NOTHING;
@@ -11,43 +9,26 @@ INSERT INTO hu6.docentes (id,usuario_id,titulo,nombres,apellidos,grado,departame
 INSERT INTO hu6.salas (id,pabellon,ubicacion,asientos) VALUES ('A-402', 'pabellón A', 'Pabellón A, cuarto piso', 30) ON CONFLICT DO NOTHING;
 INSERT INTO hu6.salas (id,pabellon,ubicacion,asientos) VALUES ('B-201', 'pabellón B', 'Pabellón B, segundo piso', 24) ON CONFLICT DO NOTHING;
 INSERT INTO hu6.salas (id,pabellon,ubicacion,asientos) VALUES ('C-105', 'pabellón C', 'Pabellón C, primer piso', 40) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-012', 'TFC-2026-2-012', 'Optimización de rutas de reparto para comercios de Lima Metropolitana', 'Gestión de operaciones', 'Ingeniería Industrial', 'concluido', 'd-06', 'Mg. Julio Vargas Aliaga', 5, 5, '2026-11-24') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-012', 'u-004', 'Diana Carolina Rojas Ttito', 'Diana Rojas Ttito', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-012' AND nombre='Diana Carolina Rojas Ttito');
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-012', 'u-003', 'Jorge Luis Tapia Bendezú', 'Jorge Tapia Bendezú', FALSE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-012' AND nombre='Jorge Luis Tapia Bendezú');
-INSERT INTO hu6.conflictos_ref(trabajo_codigo,docente_id,motivo) VALUES ('TFC-2026-2-012', 'd-04', 'dictó clases al equipo en 2026-1') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-007', 'TFC-2026-2-007', 'Clasificación automática de reclamos ciudadanos en municipalidades distritales', 'Ciencia de datos aplicada', 'Ingeniería de Sistemas', 'concluido', 'd-07', 'Dra. Mariela Quispe Ramos', 5, 5, '2026-11-20') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-007', NULL, 'Ana Lucía Ferreyra Loza', 'Ana Ferreyra Loza', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-007' AND nombre='Ana Lucía Ferreyra Loza');
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-007', NULL, 'Martín Alonso Gálvez Ruiz', 'Martín Gálvez Ruiz', FALSE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-007' AND nombre='Martín Alonso Gálvez Ruiz');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-003', 'TFC-2026-2-003', 'Monitoreo del consumo energético en edificios universitarios con sensores IoT', 'Automatización y control', 'Ingeniería de Sistemas', 'concluido', NULL, 'Dr. Óscar Villanueva Prado', 5, 5, '2026-11-18') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-003', NULL, 'Luciana Paredes Soto', 'Luciana Paredes Soto', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-003' AND nombre='Luciana Paredes Soto');
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-003', NULL, 'Renato Díaz Cornejo', 'Renato Díaz Cornejo', FALSE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-003' AND nombre='Renato Díaz Cornejo');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-005', 'TFC-2026-2-005', 'Gestión de inventarios con analítica predictiva para boticas de barrio', 'Gestión de operaciones', 'Ingeniería Industrial', 'concluido', 'd-02', 'Mg. Sandra Bustamante Ríos', 5, 5, '2026-11-25') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-005', NULL, 'Valeria Núñez Quiroga', 'Valeria Núñez Quiroga', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-005' AND nombre='Valeria Núñez Quiroga');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-009', 'TFC-2026-2-009', 'Control de calidad por visión artificial en una planta de galletas', 'Automatización y control', 'Ingeniería Industrial', 'concluido', NULL, 'Mg. Andrés Chávez Ninahuanca', 5, 5, '2026-11-26') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-009', NULL, 'Sebastián Lazo Medina', 'Sebastián Lazo Medina', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-009' AND nombre='Sebastián Lazo Medina');
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-009', NULL, 'Camila Ortiz Ruiz', 'Camila Ortiz Ruiz', FALSE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-009' AND nombre='Camila Ortiz Ruiz');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-014', 'TFC-2026-2-014', 'Plataforma de seguimiento de egresados para la facultad', 'Ing. de software', 'Ingeniería de Sistemas', 'concluido', 'd-05', 'Dr. Pedro Salazar Huamán', 5, 5, '2026-11-23') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-014', NULL, 'Fabián Rosales Vera', 'Fabián Rosales Vera', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-014' AND nombre='Fabián Rosales Vera');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-018', 'TFC-2026-2-018', 'Evaluación de pavimentos permeables en vías locales de Santiago de Surco', 'Sostenibilidad urbana', 'Ingeniería Civil', 'concluido', 'd-01', 'Dr. Ricardo Cárdenas Loayza', 5, 5, '2026-11-27') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-018', NULL, 'Andrea Molina Castro', 'Andrea Molina Castro', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-018' AND nombre='Andrea Molina Castro');
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-018', NULL, 'Joaquín Pérez Llanos', 'Joaquín Pérez Llanos', FALSE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-018' AND nombre='Joaquín Pérez Llanos');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-021', 'TFC-2026-2-021', 'Recomendador de cursos electivos basado en el historial académico', 'Ciencia de datos aplicada', 'Ingeniería de Sistemas', 'concluido', 'd-07', 'Dra. Mariela Quispe Ramos', 5, 5, '2026-11-24') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-021', NULL, 'Daniela Huerta Ramos', 'Daniela Huerta Ramos', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-021' AND nombre='Daniela Huerta Ramos');
-INSERT INTO hu6.trabajos_ref (id,codigo,titulo,linea,departamento,estado,asesor_id,asesor,aprobados,total,informe_aprobado_el) VALUES ('t-025', 'TFC-2026-2-025', 'Simulación de colas en la atención de una agencia bancaria de Miraflores', 'Gestión de operaciones', 'Ingeniería Industrial', 'concluido', 'd-02', 'Mg. Sandra Bustamante Ríos', 5, 5, '2026-11-26') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-025', NULL, 'Gonzalo Ríos Tello', 'Gonzalo Ríos Tello', TRUE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-025' AND nombre='Gonzalo Ríos Tello');
-INSERT INTO hu6.integrantes_ref(trabajo_codigo,usuario_id,nombre,corto,responsable) SELECT 'TFC-2026-2-025', NULL, 'Mariana Cabrera Vílchez', 'Mariana Cabrera Vílchez', FALSE WHERE NOT EXISTS(SELECT 1 FROM hu6.integrantes_ref WHERE trabajo_codigo='TFC-2026-2-025' AND nombre='Mariana Cabrera Vílchez');
 INSERT INTO hu6.reservas_sala(sala_id,fecha,hora,motivo) VALUES ('A-402', '2026-12-11', '08:00', 'Examen de suficiencia de la facultad') ON CONFLICT DO NOTHING;
-INSERT INTO public.sustentaciones("id","trabajoId","estado","programadaEl","fecha","hora","salaId","modalidad","calificacion") VALUES ('s-007', 't-007', 'programada', '2026-09-02', '2026-12-11', '11:00', 'A-402', 'Presencial', NULL) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.jurados(sustentacion_id,docente_id,presidente) VALUES ('s-007', 'd-05', TRUE) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.jurados(sustentacion_id,docente_id,presidente) VALUES ('s-007', 'd-02', FALSE) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.jurados(sustentacion_id,docente_id,presidente) VALUES ('s-007', 'd-08', FALSE) ON CONFLICT DO NOTHING;
-INSERT INTO public.sustentaciones("id","trabajoId","estado","programadaEl","fecha","hora","salaId","modalidad","calificacion") VALUES ('s-003', 't-003', 'realizada', '2026-09-01', '2026-12-09', '09:00', 'B-201', 'Presencial', 16) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.jurados(sustentacion_id,docente_id,presidente) VALUES ('s-003', 'd-01', TRUE) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.jurados(sustentacion_id,docente_id,presidente) VALUES ('s-003', 'd-03', FALSE) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.jurados(sustentacion_id,docente_id,presidente) VALUES ('s-003', 'd-04', FALSE) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.actas(sustentacion_id,resultado,observaciones,registrada,registrada_el,registrada_hora) VALUES ('s-003', 'Aprobado', 'Se sugiere ampliar la muestra a dos edificios adicionales.', TRUE, '2026-12-09', '10:20') ON CONFLICT DO NOTHING;
-INSERT INTO hu6.calificaciones(sustentacion_id,criterio_id,nota) VALUES ('s-003', 'rigor', 16) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.calificaciones(sustentacion_id,criterio_id,nota) VALUES ('s-003', 'resultados', 15) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.calificaciones(sustentacion_id,criterio_id,nota) VALUES ('s-003', 'informe', 17) ON CONFLICT DO NOTHING;
-INSERT INTO hu6.calificaciones(sustentacion_id,criterio_id,nota) VALUES ('s-003', 'exposicion', 16) ON CONFLICT DO NOTHING;
-COMMIT;
+-- HU-2 ya define fecha, hora, jurado y sala para el trabajo concluido t-012.
+-- Las altas y los cambios posteriores realizados por coordinación se respetan.
+DO $$
+DECLARE
+  trabajo public.trabajos%ROWTYPE;
+  nueva varchar;
+BEGIN
+  SELECT * INTO STRICT trabajo FROM public.trabajos
+    WHERE id = 't-012' AND codigo = 'TFC-2026-2-012';
+  IF trabajo.estado <> 'concluido' OR trabajo.sustentacion IS NULL THEN RETURN; END IF;
+
+  INSERT INTO hu6.conflictos_trabajo VALUES (trabajo.id, 'd-04', 'dictó clases al equipo en 2026-1')
+    ON CONFLICT DO NOTHING;
+  IF EXISTS (SELECT 1 FROM public.sustentaciones WHERE "trabajoId" = trabajo.id) THEN RETURN; END IF;
+  INSERT INTO public.sustentaciones ("id","trabajoId","fecha","hora","modalidad","estado","salaId","programadaEl")
+    VALUES ('s-012', trabajo.id, (trabajo.sustentacion->>'fecha')::timestamp::date,
+      (trabajo.sustentacion->>'fecha')::timestamp::time, initcap(trabajo.sustentacion->>'modalidad'),
+      'programada', 'A-402', trabajo."cerradoEn"::date)
+    RETURNING id INTO nueva;
+  INSERT INTO hu6.jurados (sustentacion_id, docente_id, presidente)
+    VALUES (nueva, 'd-01', true), (nueva, 'd-02', false), (nueva, 'd-03', false);
+END $$;
