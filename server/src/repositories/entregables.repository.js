@@ -1,10 +1,11 @@
 import db from '../db/models/index.cjs';
-import * as trabajos from './trabajosHu2.temporal.js';
+import * as trabajos from './trabajos.repository.js'; // HU-2
 
 // Patrón Repository de la HU-4: el único lugar que lee y escribe las tablas
 // entregables, avances, ampliaciones y requisitos. El servicio no conoce Sequelize.
+// El trabajo (estado, integrantes y asesor) se LEE con el repositorio de la HU-2.
 
-const { Entregable, Avance, Ampliacion, Requisito, Periodo, Usuario, sequelize } = db;
+const { Entregable, Avance, Ampliacion, Requisito, Periodo, Usuario, Asesor, sequelize } = db;
 const { Op } = db.Sequelize;
 
 const plano = (instancia) => instancia.get({ plain: true });
@@ -30,6 +31,34 @@ function aAvance(a) {
   };
 }
 
+// ─────────── Trabajo (HU-2 y HU-3) ───────────
+
+/**
+ * Lo que la HU-4 necesita del trabajo de la HU-2, con la forma que usan el servicio y el front:
+ * { id, codigo, titulo, linea, estado, integrantes: ['u-001', …], asesor: { usuarioId, nombre, correo, trato } }
+ * El asesor viene de la HU-3 (tabla asesores, enlazada por trabajos.asesorId).
+ */
+async function aTrabajo(t) {
+  if (!t) return null;
+  let asesor = null;
+  if (t.asesorId) {
+    const fila = await Asesor.findByPk(t.asesorId, { attributes: ['usuarioId', 'titulo', 'correo'] });
+    if (fila) {
+      const femenino = t.asesor?.genero ? t.asesor.genero === 'f' : fila.titulo.startsWith('Dra');
+      asesor = { usuarioId: fila.usuarioId, nombre: t.asesor?.nombre, correo: fila.correo, trato: femenino ? 'tu asesora' : 'tu asesor' };
+    }
+  }
+  return {
+    id: t.id,
+    codigo: t.codigo,
+    titulo: t.titulo,
+    linea: t.linea,
+    estado: t.estado,
+    integrantes: t.integrantes.map((i) => i.usuarioId),
+    asesor,
+  };
+}
+
 // ─────────── Lectura ───────────
 
 /**
@@ -37,7 +66,7 @@ function aAvance(a) {
  * { trabajo, entregables, avances, ampliaciones, requisitos }. Devuelve null si el trabajo no existe.
  */
 export async function cargarPlan(trabajoId) {
-  const trabajo = await trabajos.buscarPorId(trabajoId);
+  const trabajo = await aTrabajo(await trabajos.buscarPorId(trabajoId));
   if (!trabajo) return null;
 
   const entregables = (await Entregable.findAll({ where: { trabajoId }, order: [['orden', 'ASC']] })).map(plano);
@@ -68,12 +97,16 @@ export async function buscarEntregable(id) {
   return entregable ? plano(entregable) : null;
 }
 
+/** Id del trabajo vigente del estudiante (HU-2), o null. */
 export async function trabajoIdDeEstudiante(usuarioId) {
   return (await trabajos.buscarDeEstudiante(usuarioId))?.id ?? null;
 }
 
+/** Trabajos que asesora el usuario: su ficha de asesor (HU-3) → sus trabajos (HU-2). */
 export async function trabajosDeAsesor(usuarioId) {
-  return trabajos.listarDeAsesor(usuarioId);
+  const ficha = await Asesor.findOne({ where: { usuarioId }, attributes: ['id'] });
+  if (!ficha) return [];
+  return Promise.all((await trabajos.listarDeAsesor(ficha.id)).map(aTrabajo));
 }
 
 // ─────────── Escritura ───────────

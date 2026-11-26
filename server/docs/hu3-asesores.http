@@ -1,0 +1,100 @@
+### HU-3 · Asesores y asignación — peticiones de prueba
+### Se ejecutan con la extensión "REST Client" de VS Code (clic en "Send Request" sobre cada una).
+### Antes: npm run db:reset  y  npm run dev
+
+@api = http://localhost:3000/api
+
+### ───────── Público (visitante) ─────────
+
+### Directorio: línea, solo con cupo, ordenado por cupo, página 1
+GET {{api}}/asesores?linea=Automatización y control&soloConCupo=true&orden=cupo&pagina=1&porPagina=6
+
+### Buscar por nombre (no importan mayúsculas)
+GET {{api}}/asesores?texto=vargas
+
+### Asesores destacados (landing)
+GET {{api}}/asesores/destacados
+
+### Otros asesores de la misma línea con cupo (cuando el elegido no tiene cupo)
+GET {{api}}/asesores/a-04/alternativas
+
+### ───────── Estudiante: Diana ─────────
+
+# @name loginDiana
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{ "correo": "drojas@aloe.ulima.edu.pe", "password": "Tfc2026!" }
+
+###
+@diana = {{loginDiana.response.body.token}}
+
+### Mi solicitud (trabajo, última solicitud y término)
+GET {{api}}/solicitudes/mia
+Authorization: Bearer {{diana}}
+
+### Enviar solicitud a Julio Vargas (a-08) → 201
+# @name enviar
+POST {{api}}/solicitudes
+Authorization: Bearer {{diana}}
+Content-Type: application/json
+
+{ "asesorId": "a-08", "mensaje": "Nuestro trabajo combina control de calidad con mejora de procesos; su experiencia nos ayudaría." }
+
+###
+@solicitud = {{enviar.response.body.solicitud.id}}
+
+### Error 409: ya tiene una solicitud pendiente
+POST {{api}}/solicitudes
+Authorization: Bearer {{diana}}
+Content-Type: application/json
+
+{ "asesorId": "a-02", "mensaje": "Segunda solicitud mientras la primera sigue pendiente." }
+
+### ───────── Asesor: Julio ─────────
+
+# @name loginJulio
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{ "correo": "jvargas@ulima.edu.pe", "password": "Tfc2026!" }
+
+###
+@julio = {{loginJulio.response.body.token}}
+
+### Mi ficha + resumen de pendientes
+GET {{api}}/asesores/me
+Authorization: Bearer {{julio}}
+
+### Bandeja de solicitudes pendientes
+GET {{api}}/asesores/me/solicitudes?estado=pendientes
+Authorization: Bearer {{julio}}
+
+### Aceptar (transacción: cupo + trabajo + solicitud)
+PATCH {{api}}/solicitudes/{{solicitud}}/aceptar
+Authorization: Bearer {{julio}}
+
+### Rechazar con motivo (usar en lugar de aceptar)
+PATCH {{api}}/solicitudes/{{solicitud}}/rechazar
+Authorization: Bearer {{julio}}
+Content-Type: application/json
+
+{ "motivo": "Mi cupo de este semestre está reservado para trabajos de logística." }
+
+### Mis asesorados
+GET {{api}}/asesores/me/asesorados
+Authorization: Bearer {{julio}}
+
+### Terminar la asesoría (libera el cupo y queda en el historial)
+POST {{api}}/asesores/me/asesorados/TFC-2026-2-041/terminar
+Authorization: Bearer {{julio}}
+Content-Type: application/json
+
+{ "motivo": "El equipo cambió el enfoque del trabajo hacia visión artificial." }
+
+### Editar mi ficha (error 400: cupo menor a los trabajos a cargo)
+PUT {{api}}/asesores/me
+Authorization: Bearer {{julio}}
+Content-Type: application/json
+
+{ "gradoAcademico": "Magíster", "departamento": "Ingeniería Industrial", "lineas": ["Gestión de operaciones"], "experiencia": "", "cupoMaximo": 1 }

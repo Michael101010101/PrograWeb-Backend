@@ -6,6 +6,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Entregable extends Model {
     static associate(db) {
+      Entregable.belongsTo(db.Trabajo, { foreignKey: 'trabajoId', as: 'trabajo' }); // HU-2
       Entregable.hasMany(db.Avance, { foreignKey: 'entregableId', as: 'avances' });
       Entregable.hasMany(db.Ampliacion, { foreignKey: 'entregableId', as: 'ampliaciones' });
     }
