@@ -9,7 +9,7 @@ export const CATALOGOS = {
     'Automatización y control',
     'Ciencia de datos aplicada',
     'Gestión de operaciones',
-    'Ing. de software',
+    'Ingeniería de software',
     'Innovación educativa',
     'Sostenibilidad urbana',
   ],

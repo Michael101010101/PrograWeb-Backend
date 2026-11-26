@@ -1,39 +1,50 @@
 'use strict';
 const { Model } = require('sequelize');
+const { randomBytes } = require('node:crypto');
 
-// Vista mínima del Trabajo que usa la HU-3 (la entidad completa es de la HU-2).
 module.exports = (sequelize, DataTypes) => {
   class Trabajo extends Model {
     static associate(db) {
-      Trabajo.belongsTo(db.Asesor, { foreignKey: 'asesorId', as: 'asesor' });
-      Trabajo.hasMany(db.Solicitud, { foreignKey: 'trabajoCodigo', as: 'solicitudes' });
+      Trabajo.hasMany(db.TrabajoIntegrante, { foreignKey: 'trabajoId', as: 'integrantes' });
+      Trabajo.hasMany(db.TrabajoHistorial, { foreignKey: 'trabajoId', as: 'historial' });
+      Trabajo.belongsTo(db.LineaInvestigacion, { foreignKey: 'lineaId', as: 'lineaInvestigacion' });
+      Trabajo.belongsTo(db.Asesor, { foreignKey: 'asesorId', as: 'asesorAsignado' });
+      Trabajo.hasMany(db.Solicitud, { foreignKey: 'trabajoCodigo', sourceKey: 'codigo', as: 'solicitudes' });
     }
   }
 
   Trabajo.init(
     {
-      codigo: { type: DataTypes.STRING(20), primaryKey: true },
-      titulo: { type: DataTypes.STRING(200), allowNull: false },
-      linea: { type: DataTypes.STRING(60), allowNull: false },
-      carrera: { type: DataTypes.STRING(60), allowNull: false, defaultValue: '' },
-      integrantes: { type: DataTypes.JSONB, allowNull: false, defaultValue: [] },
+      id: { type: DataTypes.STRING(20), primaryKey: true, defaultValue: () => `t-${randomBytes(5).toString('hex')}` },
+      codigo: { type: DataTypes.STRING(20), allowNull: false, unique: true },
+      titulo: { type: DataTypes.STRING(160), allowNull: false },
+      lineaId: { type: DataTypes.STRING(20), allowNull: false },
+      carrera: DataTypes.STRING(60),
+      resumen: { type: DataTypes.TEXT, allowNull: false },
+      objetivos: { type: DataTypes.TEXT, allowNull: false },
+      palabrasClave: { type: DataTypes.JSONB, allowNull: false, defaultValue: [] },
       estado: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: 'propuesta',
-        validate: { isIn: [['propuesta', 'en_desarrollo', 'concluido']] },
+        validate: { isIn: [['propuesta', 'en_desarrollo', 'concluido', 'desistido']] },
       },
+      asesor: DataTypes.JSONB,
       asesorId: DataTypes.STRING(20),
-      avance: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
       porRevisar: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
       nota: DataTypes.JSONB,
+      plan: DataTypes.JSONB,
+      sustentacion: DataTypes.JSONB,
+      periodoId: { type: DataTypes.INTEGER, allowNull: false },
+      fechaRegistro: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+      cerradoEn: DataTypes.DATE,
     },
     {
       sequelize,
       modelName: 'Trabajo',
       tableName: 'trabajos',
       timestamps: true,
-      createdAt: 'creadoEn',
+      createdAt: false,
       updatedAt: 'actualizadoEn',
     }
   );

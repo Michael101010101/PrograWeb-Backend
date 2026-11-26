@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Solicitud extends Model {
     static associate(db) {
       Solicitud.belongsTo(db.Asesor, { foreignKey: 'asesorId', as: 'asesor' });
-      Solicitud.belongsTo(db.Trabajo, { foreignKey: 'trabajoCodigo', as: 'trabajo' });
+      Solicitud.belongsTo(db.Trabajo, { foreignKey: 'trabajoCodigo', targetKey: 'codigo', as: 'trabajo' });
     }
   }
 

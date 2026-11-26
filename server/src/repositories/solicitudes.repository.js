@@ -3,9 +3,18 @@ import db from '../db/models/index.cjs';
 // Patrón Repository sobre el modelo Solicitud (HU-3).
 // Cada solicitud se devuelve con los datos de su trabajo (relación belongsTo → include).
 
-const { Solicitud, Trabajo } = db;
+const { Solicitud, Trabajo, LineaInvestigacion } = db;
 
-const CON_TRABAJO = { include: [{ model: Trabajo, as: 'trabajo', attributes: ['codigo', 'titulo', 'linea'] }] };
+const CON_TRABAJO = {
+  include: [
+    {
+      model: Trabajo,
+      as: 'trabajo',
+      attributes: ['codigo', 'titulo'],
+      include: [{ model: LineaInvestigacion, as: 'lineaInvestigacion', attributes: ['nombre'] }],
+    },
+  ],
+};
 
 /** Forma que usa el front: { id, asesorId, estado, fecha, trabajo: { codigo, titulo, linea, equipo }, mensaje, … } */
 function aObjeto(instancia) {
@@ -19,7 +28,7 @@ function aObjeto(instancia) {
     trabajo: {
       codigo: s.trabajoCodigo,
       titulo: s.trabajo?.titulo ?? '',
-      linea: s.trabajo?.linea ?? '',
+      linea: s.trabajo?.lineaInvestigacion?.nombre ?? '',
       equipo: s.equipo,
     },
     mensaje: s.mensaje,

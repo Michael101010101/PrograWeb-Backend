@@ -18,9 +18,12 @@ const db = {};
   require('./intentoLogin.cjs'),
   require('./periodo.cjs'),
   require('./etapa.cjs'),
+  require('./lineaInvestigacion.cjs'),
+  require('./trabajo.cjs'),
+  require('./trabajoIntegrante.cjs'),
+  require('./trabajoHistorial.cjs'),
   // HU-3 · Asesores y asignación
   require('./asesor.cjs'),
-  require('./trabajo.cjs'),
   require('./solicitud.cjs'),
   require('./historialAsesoria.cjs'),
 ].forEach((definir) => {
