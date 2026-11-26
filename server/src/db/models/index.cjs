@@ -31,6 +31,8 @@ const db = {};
   require('./avance.cjs'),
   require('./ampliacion.cjs'),
   require('./requisito.cjs'),
+  // HU-5 · Revisión y retroalimentación
+  require('./comentarioAvance.cjs'),
 ].forEach((definir) => {
   const modelo = definir(sequelize, Sequelize.DataTypes);
   db[modelo.name] = modelo;
