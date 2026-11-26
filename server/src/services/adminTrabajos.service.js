@@ -4,14 +4,14 @@ import HttpError from '../utils/HttpError.js';
 
 // HU-7 · Supervisión de trabajos (coordinación). Solo lectura. No conoce Express ni Sequelize.
 
-const ESTADOS = [
+export const ESTADOS = [
   { valor: 'propuesta', etiqueta: 'Propuesta' },
   { valor: 'en_desarrollo', etiqueta: 'En desarrollo' },
   { valor: 'concluido', etiqueta: 'Concluido' },
   { valor: 'desistido', etiqueta: 'Desistido' },
 ];
 const VALORES_ESTADO = ESTADOS.map((e) => e.valor);
-const ESTADOS_VENCIBLES = ['pendiente', 'observado'];
+export const ESTADOS_VENCIBLES = ['pendiente', 'observado'];
 const SIN_ASESOR = 'sin_asesor';
 
 const LIMITE_DEFECTO = 20;
