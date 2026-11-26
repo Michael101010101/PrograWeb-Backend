@@ -1,0 +1,347 @@
+{
+  "_contrato": "Datos semilla de prueba de HU-7. Las fechas son desfases en días respecto del día en que se corre el seeder (negativo = pasado). Contraseña de las cuentas nuevas: la misma del seed de HU-1 (Tfc2026!).",
+  "referencias": { "coordinador": "u-201", "periodoActual": "2026-2" },
+
+  "periodos": [
+    {
+      "semestre": "2026-1",
+      "activo": false,
+      "correoContacto": "tfc@ulima.edu.pe",
+      "anexo": "30412",
+      "mesaAyuda": "30100",
+      "direccion": "Av. Javier Prado Este 4600, Santiago de Surco"
+    }
+  ],
+
+  "lineas": [
+    { "id": "li-001", "nombre": "Ciencia de datos aplicada" },
+    { "id": "li-002", "nombre": "Ingeniería de software" },
+    { "id": "li-003", "nombre": "Gestión de operaciones" },
+    { "id": "li-004", "nombre": "Automatización y control" },
+    { "id": "li-005", "nombre": "Sostenibilidad urbana" }
+  ],
+
+  "usuarios": [
+    { "id": "u-701", "rol": "estudiante", "estado": "activo", "nombres": "Lucía Fernanda", "apellidos": "Huamán Castillo", "correo": "lhuaman@aloe.ulima.edu.pe", "telefono": "987112233", "carrera": "Ingeniería de Sistemas", "ciclo": "Décimo", "codigoAlumno": "20227001", "creadoDias": -265, "ultimoIngresoDias": -3 },
+    { "id": "u-702", "rol": "estudiante", "estado": "activo", "nombres": "Sebastián", "apellidos": "Torres Llanos", "correo": "storres@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería de Sistemas", "ciclo": "Décimo", "codigoAlumno": "20227002", "creadoDias": -264, "ultimoIngresoDias": -10 },
+    { "id": "u-703", "rol": "estudiante", "estado": "activo", "nombres": "Valeria Sofía", "apellidos": "Gutiérrez Paz", "correo": "vgutierrez@aloe.ulima.edu.pe", "telefono": "945221100", "carrera": "Ingeniería de Sistemas", "ciclo": "Noveno", "codigoAlumno": "20227003", "creadoDias": -262, "ultimoIngresoDias": -1 },
+    { "id": "u-704", "rol": "estudiante", "estado": "activo", "nombres": "Mateo Andrés", "apellidos": "Salazar Rivas", "correo": "msalazar@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería de Sistemas", "ciclo": "Décimo", "codigoAlumno": "20227004", "creadoDias": -118, "ultimoIngresoDias": -2 },
+    { "id": "u-705", "rol": "estudiante", "estado": "activo", "nombres": "Camila", "apellidos": "Ñahui Ccori", "correo": "cnahui@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería de Sistemas", "ciclo": "Noveno", "codigoAlumno": "20227005", "creadoDias": -118, "ultimoIngresoDias": -4 },
+    {
+      "id": "u-706", "rol": "estudiante", "estado": "bloqueado", "nombres": "Renzo Alonso", "apellidos": "Paredes Lazo", "correo": "rparedes@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería de Sistemas", "ciclo": "Octavo", "codigoAlumno": "20227006", "creadoDias": -110, "ultimoIngresoDias": -30,
+      "motivoBloqueo": "Cuenta bloqueada por la coordinación: se detectaron ingresos simultáneos desde equipos de terceros durante la entrega de avances. Se desbloqueará cuando el estudiante se presente en la oficina TFC con su carné universitario y cambie su contraseña."
+    },
+    { "id": "u-707", "rol": "estudiante", "estado": "activo", "nombres": "Ximena", "apellidos": "Cárdenas Soto", "correo": "xcardenas@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería de Sistemas", "ciclo": "Décimo", "codigoAlumno": "20227007", "creadoDias": -117, "ultimoIngresoDias": -6 },
+    { "id": "u-708", "rol": "estudiante", "estado": "activo", "nombres": "Gabriel", "apellidos": "Mendoza Arce", "correo": "gmendoza@aloe.ulima.edu.pe", "telefono": "956789012", "carrera": "Ingeniería de Sistemas", "ciclo": "Décimo", "codigoAlumno": "20227008", "creadoDias": -122, "ultimoIngresoDias": -1 },
+    { "id": "u-709", "rol": "estudiante", "estado": "activo", "nombres": "Andrea Paola", "apellidos": "Chumpitaz Vega", "correo": "achumpitaz@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Industrial", "ciclo": "Décimo", "codigoAlumno": "20227009", "creadoDias": -248, "ultimoIngresoDias": -40 },
+    { "id": "u-710", "rol": "estudiante", "estado": "activo", "nombres": "Luis Fernando", "apellidos": "Espinoza Ruiz", "correo": "lespinoza@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Industrial", "ciclo": "Décimo", "codigoAlumno": "20227010", "creadoDias": -200, "ultimoIngresoDias": -20 },
+    { "id": "u-711", "rol": "estudiante", "estado": "activo", "nombres": "Mariana", "apellidos": "Delgado Pinto", "correo": "mdelgado@aloe.ulima.edu.pe", "telefono": "932100456", "carrera": "Ingeniería Industrial", "ciclo": "Noveno", "codigoAlumno": "20227011", "creadoDias": -100, "ultimoIngresoDias": -2 },
+    { "id": "u-712", "rol": "estudiante", "estado": "activo", "nombres": "Joaquín", "apellidos": "Ríos Medina", "correo": "jrios@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Industrial", "ciclo": "Noveno", "codigoAlumno": "20227012", "creadoDias": -100, "ultimoIngresoDias": -5 },
+    {
+      "id": "u-713", "rol": "estudiante", "estado": "bloqueado", "nombres": "Fabiola", "apellidos": "Arana Quiroz", "correo": "farana@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Industrial", "ciclo": "Octavo", "codigoAlumno": "20227013", "creadoDias": -95, "ultimoIngresoDias": -15,
+      "motivoBloqueo": "Bloqueo preventivo mientras se revisa un posible plagio en el avance del modelo de control."
+    },
+    { "id": "u-714", "rol": "estudiante", "estado": "activo", "nombres": "Ricardo", "apellidos": "Benites Sosa", "correo": "rbenites@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Industrial", "ciclo": "Décimo", "codigoAlumno": "20227014", "creadoDias": -120, "ultimoIngresoDias": -3 },
+    { "id": "u-715", "rol": "estudiante", "estado": "activo", "nombres": "Paula Andrea", "apellidos": "Rojas Villena", "correo": "projas@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Civil", "ciclo": "Décimo", "codigoAlumno": "20227015", "creadoDias": -232, "ultimoIngresoDias": -60 },
+    { "id": "u-716", "rol": "estudiante", "estado": "activo", "nombres": "Martín", "apellidos": "Zegarra Olivares", "correo": "mzegarra@aloe.ulima.edu.pe", "telefono": "977001122", "carrera": "Ingeniería Civil", "ciclo": "Noveno", "codigoAlumno": "20227016", "creadoDias": -85, "ultimoIngresoDias": -1 },
+    { "id": "u-717", "rol": "estudiante", "estado": "activo", "nombres": "Daniela", "apellidos": "Cueva Ponce", "correo": "dcueva@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Civil", "ciclo": "Octavo", "codigoAlumno": "20227017", "creadoDias": -72, "ultimoIngresoDias": -2 },
+    { "id": "u-718", "rol": "estudiante", "estado": "activo", "nombres": "Héctor", "apellidos": "Lozano Ibarra", "correo": "hlozano@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Civil", "ciclo": "Noveno", "codigoAlumno": "20227018", "creadoDias": -20, "ultimoIngresoDias": -1 },
+    { "id": "u-719", "rol": "estudiante", "estado": "activo", "nombres": "Carla", "apellidos": "Montes Ugaz", "correo": "cmontes@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Civil", "ciclo": "Décimo", "codigoAlumno": "20227019", "creadoDias": -55, "ultimoIngresoDias": -3 },
+    { "id": "u-720", "rol": "estudiante", "estado": "sin_verificar", "nombres": "Tomás", "apellidos": "Villanueva Ruiz", "correo": "tvillanueva@aloe.ulima.edu.pe", "telefono": "", "carrera": "Ingeniería Civil", "ciclo": "Octavo", "codigoAlumno": "20227020", "creadoDias": -2, "ultimoIngresoDias": null },
+
+    { "id": "u-751", "rol": "asesor", "estado": "activo", "nombres": "Patricia", "apellidos": "Salinas Herrera", "correo": "psalinas@ulima.edu.pe", "telefono": "", "gradoAcademico": "Doctor", "departamento": "Ingeniería de Sistemas", "creadoDias": -320, "ultimoIngresoDias": -1 },
+    { "id": "u-752", "rol": "asesor", "estado": "activo", "nombres": "Eduardo", "apellidos": "Núñez Carrasco", "correo": "enunez@ulima.edu.pe", "telefono": "", "gradoAcademico": "Magíster", "departamento": "Ingeniería Industrial", "creadoDias": -318, "ultimoIngresoDias": -4 },
+    { "id": "u-753", "rol": "asesor", "estado": "activo", "nombres": "Rocío", "apellidos": "Albújar Medina", "correo": "ralbujar@ulima.edu.pe", "telefono": "", "gradoAcademico": "Magíster", "departamento": "Ingeniería Civil", "creadoDias": -300, "ultimoIngresoDias": -2 },
+    { "id": "u-754", "rol": "asesor", "estado": "activo", "nombres": "Fernando", "apellidos": "Gamarra León", "correo": "fgamarra@ulima.edu.pe", "telefono": "", "gradoAcademico": "Doctor", "departamento": "Ingeniería de Sistemas", "creadoDias": -60, "ultimoIngresoDias": -5 },
+    { "id": "u-755", "rol": "asesor", "estado": "pendiente_validacion", "nombres": "Silvia", "apellidos": "Castañeda Rey", "correo": "scastaneda@ulima.edu.pe", "telefono": "", "gradoAcademico": "Ingeniero", "departamento": "Ingeniería Civil", "creadoDias": -6, "ultimoIngresoDias": null },
+    { "id": "u-756", "rol": "asesor", "estado": "pendiente_validacion", "nombres": "Óscar", "apellidos": "Larrea Tello", "correo": "olarrea@ulima.edu.pe", "telefono": "", "gradoAcademico": "Magíster", "departamento": "Estudios Generales", "creadoDias": -3, "ultimoIngresoDias": null }
+  ],
+
+  "perfilesAsesor": [
+    { "asesorId": "u-751", "cupoMaximo": 3, "lineas": ["li-001", "li-002"], "experiencia": "Doce años en analítica de datos y desarrollo de software. Ha asesorado 18 trabajos de fin de carrera." },
+    { "asesorId": "u-752", "cupoMaximo": 3, "lineas": ["li-003", "li-004"], "experiencia": "Consultor en mejora de procesos y automatización industrial. Ha asesorado 11 trabajos." },
+    { "asesorId": "u-753", "cupoMaximo": 5, "lineas": ["li-005", "li-003"], "experiencia": "Especialista en construcción sostenible y gestión de obras. Ha asesorado 9 trabajos." },
+    { "asesorId": "u-754", "cupoMaximo": 4, "lineas": ["li-001", "li-004", "li-002"], "experiencia": "Investigador en sistemas inteligentes. Se incorporó este periodo a la asesoría de trabajos." },
+    { "asesorId": "u-755", "cupoMaximo": 3, "lineas": ["li-005"], "experiencia": "Ingeniera de proyectos de infraestructura urbana." },
+    { "asesorId": "u-756", "cupoMaximo": 2, "lineas": ["li-002", "li-001"], "experiencia": "Docente de metodología de la investigación." }
+  ],
+
+  "trabajos": [
+    {
+      "id": "t-701", "periodo": "2026-1", "estado": "concluido", "registroDias": -250, "lineaId": "li-001", "carrera": "Ingeniería de Sistemas",
+      "titulo": "Modelo predictivo de deserción estudiantil con aprendizaje automático",
+      "resumen": "Se construye un modelo de clasificación que estima el riesgo de deserción a partir del historial académico y socioeconómico de los estudiantes de pregrado.",
+      "objetivos": "Identificar las variables asociadas a la deserción; entrenar y comparar modelos de clasificación; proponer alertas tempranas para tutoría.",
+      "palabrasClave": ["aprendizaje automático", "deserción", "analítica académica"],
+      "integrantes": [{ "id": "u-701", "responsable": true }, { "id": "u-702", "responsable": false }]
+    },
+    {
+      "id": "t-702", "periodo": "2026-1", "estado": "concluido", "registroDias": -235, "lineaId": "li-003", "carrera": "Ingeniería Industrial",
+      "titulo": "Rediseño del almacén de una distribuidora de consumo masivo mediante slotting",
+      "resumen": "Se analiza la rotación de productos y se reubican las posiciones del almacén para reducir los recorridos de preparación de pedidos.",
+      "objetivos": "Clasificar los productos por rotación; proponer una nueva distribución; medir la reducción del tiempo de preparación.",
+      "palabrasClave": ["slotting", "almacenes", "logística"],
+      "integrantes": [{ "id": "u-709", "responsable": true }]
+    },
+    {
+      "id": "t-703", "periodo": "2026-1", "estado": "concluido", "registroDias": -220, "lineaId": "li-005", "carrera": "Ingeniería Civil",
+      "titulo": "Evaluación de techos verdes para reducir islas de calor en Santiago de Surco",
+      "resumen": "Se mide el efecto térmico de techos verdes en viviendas unifamiliares y se estima su costo de implementación.",
+      "objetivos": "Medir temperaturas superficiales con y sin cubierta vegetal; estimar costos; elaborar recomendaciones de diseño.",
+      "palabrasClave": ["techos verdes", "islas de calor", "vivienda"],
+      "integrantes": [{ "id": "u-715", "responsable": true }]
+    },
+    {
+      "id": "t-704", "periodo": "2026-1", "estado": "desistido", "registroDias": -205, "lineaId": "li-002", "carrera": "Ingeniería de Sistemas",
+      "motivoEstado": "El equipo desistió porque la clínica que proporcionaba los datos retiró su autorización. La estudiante registrará un tema nuevo el siguiente periodo.",
+      "titulo": "Aplicación móvil para la gestión de turnos en clínicas pequeñas",
+      "resumen": "Aplicación para reservar y reprogramar turnos de atención en clínicas con menos de diez consultorios.",
+      "objetivos": "Levantar requisitos con la clínica; diseñar la arquitectura; construir un prototipo funcional.",
+      "palabrasClave": ["aplicación móvil", "salud", "turnos"],
+      "integrantes": [{ "id": "u-703", "responsable": true }]
+    },
+    {
+      "id": "t-705", "periodo": "2026-1", "estado": "concluido", "registroDias": -185, "lineaId": "li-004", "carrera": "Ingeniería Industrial",
+      "titulo": "Control automático de temperatura en una línea de pasteurización",
+      "resumen": "Se diseña un lazo de control PID con sintonía automática para estabilizar la temperatura de pasteurización de jugos.",
+      "objetivos": "Modelar el proceso térmico; diseñar y sintonizar el controlador; validar el diseño en simulación.",
+      "palabrasClave": ["control PID", "pasteurización", "automatización"],
+      "integrantes": [{ "id": "u-710", "responsable": true }]
+    },
+    {
+      "id": "t-706", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -105, "lineaId": "li-001", "carrera": "Ingeniería de Sistemas",
+      "titulo": "Detección de fraude en pagos digitales con modelos de grafos",
+      "resumen": "Se representan las transacciones como un grafo y se entrenan modelos que identifican patrones de fraude entre cuentas relacionadas.",
+      "objetivos": "Construir el grafo de transacciones; comparar algoritmos de detección; evaluar la tasa de falsos positivos.",
+      "palabrasClave": ["fraude", "grafos", "pagos digitales"],
+      "integrantes": [{ "id": "u-704", "responsable": true }, { "id": "u-705", "responsable": false }, { "id": "u-707", "responsable": false }]
+    },
+    {
+      "id": "t-707", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -100, "lineaId": "li-002", "carrera": "Ingeniería de Sistemas",
+      "titulo": "Plataforma de pruebas automatizadas para microservicios",
+      "resumen": "Plataforma que genera y ejecuta pruebas de contrato y de integración para arquitecturas de microservicios.",
+      "objetivos": "Definir la estrategia de pruebas; construir el generador de casos; medir la cobertura alcanzada.",
+      "palabrasClave": ["pruebas automatizadas", "microservicios", "calidad de software"],
+      "integrantes": [{ "id": "u-703", "responsable": true }]
+    },
+    {
+      "id": "t-708", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -92, "lineaId": "li-002", "carrera": "Ingeniería de Sistemas",
+      "titulo": "Arquitectura de software para un sistema de citas multicanal",
+      "resumen": "Arquitectura orientada a eventos que unifica la reserva de citas por web, aplicación móvil y mensajería.",
+      "objetivos": "Diseñar la arquitectura; implementar los canales principales; evaluar el rendimiento bajo carga.",
+      "palabrasClave": ["arquitectura de software", "eventos", "multicanal"],
+      "integrantes": [{ "id": "u-706", "responsable": true }]
+    },
+    {
+      "id": "t-709", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -88, "lineaId": "li-003", "carrera": "Ingeniería Industrial",
+      "titulo": "Reducción de mermas en una planta de alimentos con Lean Six Sigma",
+      "resumen": "Se aplica la metodología DMAIC para identificar y reducir las causas principales de merma en la línea de envasado.",
+      "objetivos": "Medir la merma actual; analizar las causas raíz; implementar y controlar las mejoras.",
+      "palabrasClave": ["Lean Six Sigma", "mermas", "alimentos"],
+      "integrantes": [{ "id": "u-711", "responsable": true }, { "id": "u-712", "responsable": false }]
+    },
+    {
+      "id": "t-710", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -80, "lineaId": "li-004", "carrera": "Ingeniería Industrial",
+      "titulo": "Sistema de control predictivo para el llenado de envases",
+      "resumen": "Se diseña un controlador predictivo basado en modelo para reducir la variabilidad del volumen de llenado.",
+      "objetivos": "Identificar el modelo del proceso; diseñar el controlador predictivo; compararlo con el control actual.",
+      "palabrasClave": ["control predictivo", "llenado", "variabilidad"],
+      "integrantes": [{ "id": "u-713", "responsable": true }]
+    },
+    {
+      "id": "t-711", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -72, "lineaId": "li-005", "carrera": "Ingeniería Civil",
+      "titulo": "Diseño de pavimentos permeables para vías locales en Lima",
+      "resumen": "Se evalúan mezclas de concreto permeable para vías de bajo tránsito con el fin de reducir la escorrentía superficial.",
+      "objetivos": "Caracterizar los materiales; diseñar la estructura del pavimento; estimar la capacidad de infiltración.",
+      "palabrasClave": ["pavimento permeable", "drenaje urbano", "concreto"],
+      "integrantes": [{ "id": "u-716", "responsable": true }]
+    },
+    {
+      "id": "t-712", "periodo": "2026-2", "estado": "en_desarrollo", "registroDias": -60, "lineaId": "li-005", "carrera": "Ingeniería Civil",
+      "titulo": "Reutilización de agregados de concreto reciclado en obras de vivienda",
+      "resumen": "Se estudia la resistencia de concretos elaborados con agregado reciclado proveniente de demoliciones.",
+      "objetivos": "Ensayar mezclas con distintos porcentajes de reemplazo; comparar resistencias; evaluar el costo.",
+      "palabrasClave": ["concreto reciclado", "economía circular", "vivienda"],
+      "integrantes": [{ "id": "u-717", "responsable": true }]
+    },
+    {
+      "id": "t-713", "periodo": "2026-2", "estado": "concluido", "registroDias": -110, "lineaId": "li-001", "carrera": "Ingeniería de Sistemas",
+      "titulo": "Pronóstico de demanda eléctrica con redes neuronales recurrentes",
+      "resumen": "Se entrenan redes LSTM para pronosticar la demanda eléctrica horaria de un distrito y se comparan con modelos estadísticos.",
+      "objetivos": "Preparar la serie histórica; entrenar y ajustar las redes; comparar el error contra modelos ARIMA.",
+      "palabrasClave": ["LSTM", "series de tiempo", "demanda eléctrica"],
+      "integrantes": [{ "id": "u-708", "responsable": true }]
+    },
+    {
+      "id": "t-714", "periodo": "2026-2", "estado": "concluido", "registroDias": -108, "lineaId": "li-003", "carrera": "Ingeniería Industrial",
+      "titulo": "Planeamiento de la capacidad de una línea de envasado de bebidas",
+      "resumen": "Se modela la capacidad de la línea de envasado y se propone un plan de capacidad para la demanda proyectada a tres años.",
+      "objetivos": "Medir la capacidad actual; proyectar la demanda; proponer escenarios de inversión.",
+      "palabrasClave": ["capacidad", "planeamiento", "bebidas"],
+      "integrantes": [{ "id": "u-714", "responsable": true }]
+    },
+    {
+      "id": "t-715", "periodo": "2026-2", "estado": "propuesta", "registroDias": -5, "lineaId": "li-003", "carrera": "Ingeniería Civil",
+      "titulo": "Programación de obras con Last Planner en edificaciones multifamiliares",
+      "resumen": "Se propone aplicar el sistema Last Planner para mejorar el cumplimiento de la programación semanal en obras de vivienda.",
+      "objetivos": "Diagnosticar la programación actual; implementar Last Planner en una obra piloto; medir el porcentaje de plan cumplido.",
+      "palabrasClave": ["Last Planner", "gestión de obras", "construcción"],
+      "integrantes": [{ "id": "u-718", "responsable": true }]
+    },
+    {
+      "id": "t-716", "periodo": "2026-2", "estado": "propuesta", "registroDias": -16, "lineaId": "li-005", "carrera": "Ingeniería Civil",
+      "titulo": "Corredores verdes para la movilidad peatonal en Lima Norte",
+      "resumen": "Se propone una red de corredores verdes que conecte parques y paraderos para mejorar la movilidad peatonal.",
+      "objetivos": "Mapear los flujos peatonales; diseñar los corredores; estimar su impacto en tiempos de caminata.",
+      "palabrasClave": ["movilidad peatonal", "corredores verdes", "espacio público"],
+      "integrantes": [{ "id": "u-719", "responsable": true }]
+    }
+  ],
+
+  "asesorias": [
+    { "id": "as-701", "trabajoId": "t-701", "asesorId": "u-751", "estado": "finalizada", "solicitudDias": -245, "inicioDias": -240, "finDias": -135, "mensaje": "Nos interesa su experiencia en modelos de clasificación.", "motivoFin": "Trabajo sustentado y aprobado." },
+    { "id": "as-702", "trabajoId": "t-702", "asesorId": "u-752", "estado": "finalizada", "solicitudDias": -230, "inicioDias": -226, "finDias": -132, "mensaje": "Solicito su asesoría en gestión de almacenes.", "motivoFin": "Sustentación desaprobada; cierre del periodo 2026-1." },
+    { "id": "as-703", "trabajoId": "t-703", "asesorId": "u-753", "estado": "finalizada", "solicitudDias": -215, "inicioDias": -212, "finDias": -128, "mensaje": "Mi trabajo trata sobre techos verdes en vivienda.", "motivoFin": "Cierre del periodo 2026-1 con el informe final aprobado." },
+    { "id": "as-704", "trabajoId": "t-704", "asesorId": "u-751", "estado": "finalizada", "solicitudDias": -200, "inicioDias": -197, "finDias": -165, "mensaje": "Busco asesoría para una aplicación móvil de salud.", "motivoFin": "El equipo desistió del trabajo." },
+    { "id": "as-705", "trabajoId": "t-705", "asesorId": "u-752", "estado": "finalizada", "solicitudDias": -180, "inicioDias": -177, "finDias": -125, "mensaje": "Solicito su asesoría en control de procesos.", "motivoFin": "Trabajo sustentado y aprobado." },
+    { "id": "as-706", "trabajoId": "t-706", "asesorId": "u-751", "estado": "aceptada", "solicitudDias": -100, "inicioDias": -96, "mensaje": "Queremos trabajar detección de fraude con grafos." },
+    { "id": "as-707", "trabajoId": "t-707", "asesorId": "u-751", "estado": "aceptada", "solicitudDias": -95, "inicioDias": -92, "mensaje": "Retomo la línea de ingeniería de software con un tema nuevo." },
+    { "id": "as-708", "trabajoId": "t-708", "asesorId": "u-751", "estado": "aceptada", "solicitudDias": -88, "inicioDias": -85, "mensaje": "Proponemos una arquitectura orientada a eventos." },
+    { "id": "as-709", "trabajoId": "t-709", "asesorId": "u-752", "estado": "aceptada", "solicitudDias": -84, "inicioDias": -82, "mensaje": "Aplicaremos Lean Six Sigma en una planta de alimentos." },
+    { "id": "as-710", "trabajoId": "t-710", "asesorId": "u-752", "estado": "aceptada", "solicitudDias": -76, "inicioDias": -73, "mensaje": "Mi tema es control predictivo en llenado de envases." },
+    { "id": "as-711", "trabajoId": "t-711", "asesorId": "u-753", "estado": "aceptada", "solicitudDias": -68, "inicioDias": -65, "mensaje": "Trabajo sobre pavimentos permeables." },
+    { "id": "as-712", "trabajoId": "t-712", "asesorId": "u-753", "estado": "aceptada", "solicitudDias": -56, "inicioDias": -52, "mensaje": "Estudio de concreto con agregado reciclado." },
+    { "id": "as-713", "trabajoId": "t-713", "asesorId": "u-751", "estado": "aceptada", "solicitudDias": -106, "inicioDias": -103, "mensaje": "Pronóstico de demanda con redes recurrentes." },
+    { "id": "as-714", "trabajoId": "t-714", "asesorId": "u-752", "estado": "aceptada", "solicitudDias": -104, "inicioDias": -101, "mensaje": "Planeamiento de capacidad en una línea de bebidas." },
+    { "id": "as-715", "trabajoId": "t-715", "asesorId": "u-753", "estado": "pendiente", "solicitudDias": -4, "mensaje": "Solicito su asesoría para aplicar Last Planner en una obra de vivienda." },
+    { "id": "as-716", "trabajoId": "t-716", "asesorId": "u-752", "estado": "rechazada", "solicitudDias": -14, "mensaje": "Solicito su asesoría para mi propuesta de corredores verdes.", "motivoRechazo": "Mis líneas de asesoría no incluyen Sostenibilidad urbana. Te sugiero buscar un asesor de esa línea." },
+    { "id": "as-717", "trabajoId": "t-716", "asesorId": "u-753", "estado": "aceptada", "solicitudDias": -10, "inicioDias": -8, "mensaje": "El profesor Núñez me sugirió buscar asesoría en su línea." }
+  ],
+
+  "entregables": [
+    { "id": "e-701", "trabajoId": "t-701", "nombre": "Plan de trabajo", "peso": 15, "limiteDias": -225, "estado": "aprobado", "avances": [
+      { "id": "av-701", "version": 1, "entregaDias": -226, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Plan claro y alcance bien delimitado." } ] },
+    { "id": "e-702", "trabajoId": "t-701", "nombre": "Marco teórico", "peso": 20, "limiteDias": -205, "estado": "aprobado", "avances": [
+      { "id": "av-702", "version": 1, "entregaDias": -206, "revisionTras": 5, "resultado": "observado", "comentarios": "Faltan antecedentes de los últimos cinco años." },
+      { "id": "av-703", "version": 2, "entregaDias": -195, "revisionTras": 2, "resultado": "aprobado", "comentarios": "Observaciones levantadas." } ] },
+    { "id": "e-703", "trabajoId": "t-701", "nombre": "Diseño de la solución", "peso": 25, "limiteDias": -180, "estado": "aprobado", "avances": [
+      { "id": "av-704", "version": 1, "entregaDias": -181, "revisionTras": 4, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-704", "trabajoId": "t-701", "nombre": "Informe final", "peso": 40, "limiteDias": -155, "estado": "aprobado", "avances": [
+      { "id": "av-705", "version": 1, "entregaDias": -156, "revisionTras": 6, "resultado": "aprobado", "comentarios": "Listo para sustentación." } ] },
+
+    { "id": "e-705", "trabajoId": "t-702", "nombre": "Plan de trabajo", "peso": 20, "limiteDias": -210, "estado": "aprobado", "avances": [
+      { "id": "av-706", "version": 1, "entregaDias": -211, "revisionTras": 2, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-706", "trabajoId": "t-702", "nombre": "Diagnóstico de la operación", "peso": 30, "limiteDias": -185, "estado": "aprobado", "avances": [
+      { "id": "av-707", "version": 1, "entregaDias": -184, "revisionTras": 7, "resultado": "aprobado", "comentarios": "Se entregó un día tarde, pero el diagnóstico es sólido." } ] },
+    { "id": "e-707", "trabajoId": "t-702", "nombre": "Informe final", "peso": 50, "limiteDias": -160, "estado": "aprobado", "avances": [
+      { "id": "av-708", "version": 1, "entregaDias": -161, "revisionTras": 4, "resultado": "observado", "comentarios": "La evaluación económica no está sustentada." },
+      { "id": "av-709", "version": 2, "entregaDias": -152, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+
+    { "id": "e-708", "trabajoId": "t-703", "nombre": "Plan de trabajo", "peso": 20, "limiteDias": -195, "estado": "aprobado", "avances": [
+      { "id": "av-710", "version": 1, "entregaDias": -196, "revisionTras": 1, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-709", "trabajoId": "t-703", "nombre": "Estudio de campo", "peso": 30, "limiteDias": -170, "estado": "aprobado", "avances": [
+      { "id": "av-711", "version": 1, "entregaDias": -171, "revisionTras": 5, "resultado": "aprobado", "comentarios": "Buenas mediciones de temperatura." } ] },
+    { "id": "e-710", "trabajoId": "t-703", "nombre": "Informe final", "peso": 50, "limiteDias": -140, "estado": "aprobado", "avances": [
+      { "id": "av-712", "version": 1, "entregaDias": -141, "revisionTras": 8, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+
+    { "id": "e-711", "trabajoId": "t-705", "nombre": "Plan de trabajo", "peso": 15, "limiteDias": -175, "estado": "aprobado", "avances": [
+      { "id": "av-713", "version": 1, "entregaDias": -176, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-712", "trabajoId": "t-705", "nombre": "Marco teórico", "peso": 20, "limiteDias": -165, "estado": "aprobado", "avances": [
+      { "id": "av-714", "version": 1, "entregaDias": -166, "revisionTras": 4, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-713", "trabajoId": "t-705", "nombre": "Prototipo en simulación", "peso": 25, "limiteDias": -155, "estado": "aprobado", "avances": [
+      { "id": "av-715", "version": 1, "entregaDias": -156, "revisionTras": 2, "resultado": "aprobado", "comentarios": "La sintonía del controlador es adecuada." } ] },
+    { "id": "e-714", "trabajoId": "t-705", "nombre": "Informe final", "peso": 40, "limiteDias": -145, "estado": "aprobado", "avances": [
+      { "id": "av-716", "version": 1, "entregaDias": -146, "revisionTras": 9, "resultado": "aprobado", "comentarios": "Listo para sustentación." } ] },
+
+    { "id": "e-715", "trabajoId": "t-706", "nombre": "Plan de trabajo", "peso": 10, "limiteDias": -80, "estado": "aprobado", "avances": [
+      { "id": "av-717", "version": 1, "entregaDias": -81, "revisionTras": 2, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-716", "trabajoId": "t-706", "nombre": "Marco teórico", "peso": 15, "limiteDias": -60, "estado": "aprobado", "avances": [
+      { "id": "av-718", "version": 1, "entregaDias": -61, "revisionTras": 6, "resultado": "observado", "comentarios": "Incluir trabajos recientes sobre redes neuronales de grafos." },
+      { "id": "av-719", "version": 2, "entregaDias": -50, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-717", "trabajoId": "t-706", "nombre": "Diseño de la solución", "peso": 20, "limiteDias": -35, "estado": "entregado", "avances": [
+      { "id": "av-720", "version": 1, "entregaDias": -36, "revisionTras": null, "resultado": null } ] },
+    { "id": "e-718", "trabajoId": "t-706", "nombre": "Implementación y pruebas", "peso": 25, "limiteDias": 10, "estado": "pendiente", "avances": [] },
+    { "id": "e-719", "trabajoId": "t-706", "nombre": "Informe final", "peso": 30, "limiteDias": 25, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-720", "trabajoId": "t-707", "nombre": "Plan de trabajo", "peso": 15, "limiteDias": -75, "estado": "aprobado", "avances": [
+      { "id": "av-721", "version": 1, "entregaDias": -76, "revisionTras": 1, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-721", "trabajoId": "t-707", "nombre": "Marco teórico", "peso": 20, "limiteDias": -50, "estado": "observado", "avances": [
+      { "id": "av-722", "version": 1, "entregaDias": -51, "revisionTras": 4, "resultado": "observado", "comentarios": "Falta comparar con herramientas existentes de pruebas de contrato." } ] },
+    { "id": "e-722", "trabajoId": "t-707", "nombre": "Diseño de la solución", "peso": 25, "limiteDias": -20, "estado": "pendiente", "avances": [] },
+    { "id": "e-723", "trabajoId": "t-707", "nombre": "Informe final", "peso": 40, "limiteDias": 18, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-724", "trabajoId": "t-708", "nombre": "Plan de trabajo", "peso": 20, "limiteDias": -65, "estado": "aprobado", "avances": [
+      { "id": "av-723", "version": 1, "entregaDias": -66, "revisionTras": 5, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-725", "trabajoId": "t-708", "nombre": "Desarrollo de la arquitectura", "peso": 30, "limiteDias": -12, "estado": "entregado_con_retraso", "avances": [
+      { "id": "av-724", "version": 1, "entregaDias": -8, "revisionTras": null, "resultado": null } ] },
+    { "id": "e-726", "trabajoId": "t-708", "nombre": "Informe final", "peso": 50, "limiteDias": 22, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-727", "trabajoId": "t-709", "nombre": "Plan de trabajo", "peso": 15, "limiteDias": -62, "estado": "aprobado", "avances": [
+      { "id": "av-725", "version": 1, "entregaDias": -63, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-728", "trabajoId": "t-709", "nombre": "Diagnóstico de mermas", "peso": 20, "limiteDias": -40, "estado": "aprobado", "avances": [
+      { "id": "av-726", "version": 1, "entregaDias": -41, "revisionTras": 7, "resultado": "aprobado", "comentarios": "Buen análisis de Pareto." } ] },
+    { "id": "e-729", "trabajoId": "t-709", "nombre": "Propuesta de mejora", "peso": 25, "limiteDias": -15, "estado": "entregado", "avances": [
+      { "id": "av-727", "version": 1, "entregaDias": -16, "revisionTras": 4, "resultado": "observado", "comentarios": "Cuantificar el ahorro esperado de cada mejora." },
+      { "id": "av-728", "version": 2, "entregaDias": -6, "revisionTras": null, "resultado": null } ] },
+    { "id": "e-730", "trabajoId": "t-709", "nombre": "Informe final", "peso": 40, "limiteDias": 20, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-731", "trabajoId": "t-710", "nombre": "Plan de trabajo", "peso": 20, "limiteDias": -55, "estado": "aprobado", "avances": [
+      { "id": "av-729", "version": 1, "entregaDias": -57, "revisionTras": 2, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-732", "trabajoId": "t-710", "nombre": "Modelo de control", "peso": 30, "limiteDias": -25, "estado": "observado", "avances": [
+      { "id": "av-730", "version": 1, "entregaDias": -26, "revisionTras": 9, "resultado": "observado", "comentarios": "Hay secciones con similitud alta con otra fuente; reescribir y citar." } ] },
+    { "id": "e-733", "trabajoId": "t-710", "nombre": "Informe final", "peso": 50, "limiteDias": 15, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-734", "trabajoId": "t-711", "nombre": "Plan de trabajo", "peso": 15, "limiteDias": -50, "estado": "aprobado", "avances": [
+      { "id": "av-731", "version": 1, "entregaDias": -51, "revisionTras": 4, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-735", "trabajoId": "t-711", "nombre": "Ensayos de laboratorio", "peso": 20, "limiteDias": -30, "estado": "pendiente", "avances": [] },
+    { "id": "e-736", "trabajoId": "t-711", "nombre": "Diseño del pavimento", "peso": 25, "limiteDias": -5, "estado": "entregado", "avances": [
+      { "id": "av-732", "version": 1, "entregaDias": -5, "revisionTras": null, "resultado": null } ] },
+    { "id": "e-737", "trabajoId": "t-711", "nombre": "Informe final", "peso": 40, "limiteDias": 28, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-738", "trabajoId": "t-712", "nombre": "Plan de trabajo", "peso": 20, "limiteDias": -38, "estado": "entregado_con_retraso", "avances": [
+      { "id": "av-733", "version": 1, "entregaDias": -33, "revisionTras": null, "resultado": null } ] },
+    { "id": "e-739", "trabajoId": "t-712", "nombre": "Ensayos de resistencia", "peso": 30, "limiteDias": 8, "estado": "pendiente", "avances": [] },
+    { "id": "e-740", "trabajoId": "t-712", "nombre": "Informe final", "peso": 50, "limiteDias": 30, "estado": "pendiente", "avances": [] },
+
+    { "id": "e-741", "trabajoId": "t-713", "nombre": "Plan de trabajo", "peso": 15, "limiteDias": -85, "estado": "aprobado", "avances": [
+      { "id": "av-734", "version": 1, "entregaDias": -86, "revisionTras": 2, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-742", "trabajoId": "t-713", "nombre": "Marco teórico", "peso": 20, "limiteDias": -65, "estado": "aprobado", "avances": [
+      { "id": "av-735", "version": 1, "entregaDias": -66, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-743", "trabajoId": "t-713", "nombre": "Modelo predictivo", "peso": 25, "limiteDias": -40, "estado": "aprobado", "avances": [
+      { "id": "av-736", "version": 1, "entregaDias": -41, "revisionTras": 5, "resultado": "observado", "comentarios": "Validar con una ventana temporal fuera de la muestra." },
+      { "id": "av-737", "version": 2, "entregaDias": -30, "revisionTras": 2, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-744", "trabajoId": "t-713", "nombre": "Informe final", "peso": 40, "limiteDias": -15, "estado": "aprobado", "avances": [
+      { "id": "av-738", "version": 1, "entregaDias": -16, "revisionTras": 4, "resultado": "aprobado", "comentarios": "Listo para sustentación." } ] },
+
+    { "id": "e-745", "trabajoId": "t-714", "nombre": "Plan de trabajo", "peso": 20, "limiteDias": -83, "estado": "aprobado", "avances": [
+      { "id": "av-739", "version": 1, "entregaDias": -84, "revisionTras": 3, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-746", "trabajoId": "t-714", "nombre": "Diagnóstico de capacidad", "peso": 30, "limiteDias": -55, "estado": "aprobado", "avances": [
+      { "id": "av-740", "version": 1, "entregaDias": -56, "revisionTras": 6, "resultado": "aprobado", "comentarios": "Conforme." } ] },
+    { "id": "e-747", "trabajoId": "t-714", "nombre": "Informe final", "peso": 50, "limiteDias": -18, "estado": "aprobado", "avances": [
+      { "id": "av-741", "version": 1, "entregaDias": -19, "revisionTras": 5, "resultado": "aprobado", "comentarios": "Listo para sustentación." } ] }
+  ],
+
+  "sustentaciones": [
+    { "id": "s-701", "trabajoId": "t-701", "dias": -140, "hora": "10:00", "modalidad": "presencial", "sala": "Aula E-301", "calificacion": 17, "estado": "realizada",
+      "jurado": [{ "id": "u-752", "cargo": "presidente" }, { "id": "u-753", "cargo": "vocal" }, { "id": "u-751", "cargo": "vocal" }] },
+    { "id": "s-702", "trabajoId": "t-702", "dias": -137, "hora": "15:00", "modalidad": "virtual", "sala": null, "calificacion": 9, "estado": "desaprobada",
+      "jurado": [{ "id": "u-751", "cargo": "presidente" }, { "id": "u-753", "cargo": "vocal" }] },
+    { "id": "s-703", "trabajoId": "t-705", "dias": -130, "hora": "11:30", "modalidad": "presencial", "sala": "Aula B-204", "calificacion": 15, "estado": "realizada",
+      "jurado": [{ "id": "u-753", "cargo": "presidente" }, { "id": "u-751", "cargo": "vocal" }, { "id": "u-752", "cargo": "vocal" }] },
+    { "id": "s-704", "trabajoId": "t-713", "dias": 12, "hora": "09:00", "modalidad": "presencial", "sala": "Sala de grados 1", "calificacion": null, "estado": "programada",
+      "jurado": [{ "id": "u-753", "cargo": "presidente" }, { "id": "u-752", "cargo": "vocal" }] },
+    { "id": "s-705", "trabajoId": "t-714", "dias": 20, "hora": "16:00", "modalidad": "virtual", "sala": null, "calificacion": null, "estado": "reprogramada",
+      "jurado": [{ "id": "u-751", "cargo": "presidente" }, { "id": "u-753", "cargo": "vocal" }] }
+  ],
+
+  "cuposAsesor": [
+    { "id": "ca-701", "asesorId": "u-751", "periodo": "2026-2", "cupoMaximo": 4, "creadoDias": -90, "motivo": "Ampliación aprobada por la coordinación para atender un trabajo adicional de la línea de Ingeniería de software." }
+  ],
+
+  "mensajes": [
+    { "id": "m-701", "destinatarioId": "u-751", "trabajoId": "t-708", "creadoDias": -18, "leido": true, "asunto": "Cupo del periodo 2026-2",
+      "cuerpo": "Estimada profesora Salinas: con este trabajo completa su cupo ampliado del periodo. Le agradeceré revisar los avances pendientes antes del cierre de la etapa de desarrollo." },
+    { "id": "m-702", "destinatarioId": "u-752", "trabajoId": null, "creadoDias": -2, "leido": false, "asunto": "Avances pendientes de revisión",
+      "cuerpo": "Estimado profesor Núñez: el tablero muestra avances sin revisar en uno de sus trabajos. Por favor, revíselos esta semana para no retrasar a los estudiantes." }
+  ]
+}
