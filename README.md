@@ -19,7 +19,7 @@ Invitación de coordinación vigente: `/registro/coordinador?invitacion=INV-7K2P
 
 ## HU-6: Sustentaciones
 
-En una copia nueva, instala las dependencias con `npm ci` tanto en `client/` como en `server/`.
+En una copia nueva, instala las dependencias del backend con `npm ci` desde `server/`.
 Configura `server/.env` a partir de `.env.example` con los datos de PostgreSQL y un JWT_SECRET propio.
 Para una base nueva, desde `server/` ejecuta `npm run db:create`, `npm run db:migrate` y `npm run db:seed`.
 Si la base del grupo ya tiene los datos de HU-2 y HU-3, ejecuta `npm run hu6:setup` desde `server/` con las variables de esa base. Aplica las migraciones pendientes y ejecuta únicamente el seeder de HU-6. Para una conexión que requiere DB_SSL configura también NODE_ENV=production. El servidor lee los trabajos y sus integrantes desde las tablas del grupo.
@@ -32,8 +32,9 @@ FROM public.sustentaciones s
 JOIN public.trabajos t ON t.id = s."trabajoId";
 ```
 
-Inicia `npm run dev` desde `server/` y, en otra terminal, desde `client/`.
-Con la sesión del grupo, coordinación accede a `/admin/sustentaciones` y cada estudiante a `/estudiante/sustentacion`.
-La API se monta en `/api/hu6` y utiliza el JWT de HU-1. Las pruebas se ejecutan desde `server/` con `npm run hu6:test`.
+Desde `server/`, ejecuta `npm run dev` para iniciar la API o `npm run hu6:test` para probar HU6.
+La API utiliza el JWT del grupo y expone las rutas de sustentaciones en `/api/hu6`.
 
-Para Vercel, selecciona la raíz del repositorio. La entrada api/index.mjs sirve la misma aplicación Express que en local. Configura las variables del servidor y CLIENT_URL para tu dominio, prepara PostgreSQL antes del primer uso y deja VITE_API_URL vacío para acceder a la API del mismo dominio.
+En Vercel, el proyecto del backend utiliza `server/` como directorio raíz.
+Las pantallas de HU6 se despliegan desde el repositorio PrograWeb-frontend.
+En el frontend, `VITE_API_URL` es la URL del backend sin el sufijo `/api`. En el servidor, `CLIENT_URL` debe incluir el origen del frontend.
