@@ -10,6 +10,7 @@ import asesoresRoutes from './asesores.routes.js';
 import solicitudesRoutes from './solicitudes.routes.js';
 import entregablesRoutes from './entregables.routes.js';
 import planesRoutes from './planes.routes.js';
+import revisionesRoutes from './revisiones.routes.js';
 import { CATALOGOS } from '../config/catalogos.js';
 
 // Punto único donde cada historia monta sus rutas.
@@ -38,5 +39,8 @@ router.use('/solicitudes', solicitudesRoutes);
 // HU-4 · Plan de entregables
 router.use('/entregables', entregablesRoutes); // estudiante
 router.use('/planes', planesRoutes); // asesor
+
+// HU-5 · Revisión y retroalimentación de avances
+router.use('/revision', revisionesRoutes);
 
 export default router;
