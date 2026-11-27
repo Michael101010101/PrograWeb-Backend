@@ -144,6 +144,48 @@ const normalizarModalidad = (m) => (m ? String(m).toLowerCase() : null);
 /** "A-402 · Pabellón A, cuarto piso"; null si la sustentación es virtual (sin sala). */
 const textoSala = (salaId, ubicacion) => (salaId ? [salaId, ubicacion].filter(Boolean).join(' · ') : null);
 
+/** Estados de sustentación que aún están por ocurrir (los que se listan como "próximas"). */
+export const SUSTENTACION_PENDIENTE = ['programada', 'reprogramada'];
+
+/** [{ estado, total }] de sustentaciones de los trabajos del periodo. */
+export async function sustentacionesPorEstado(periodoId) {
+  return select(
+    `SELECT s."estado", COUNT(*)::int AS total
+     FROM public."sustentaciones" s
+     JOIN "trabajos" t ON t."id" = s."trabajoId"
+     WHERE t."periodoId" = :periodoId
+     GROUP BY s."estado"`,
+    { periodoId }
+  );
+}
+
+/**
+ * Próximas sustentaciones del periodo (programadas o reprogramadas, desde `hoy` AAAA-MM-DD), por fecha y hora.
+ * [{ id, fecha, hora, modalidad, estado, lugar, trabajo: { id, codigo, titulo } }]
+ */
+export async function proximasSustentaciones({ periodoId, hoy, limite }) {
+  const filas = await select(
+    `SELECT s."id", s."fecha", s."hora", s."modalidad", s."estado", s."salaId", sa."ubicacion",
+            t."id" AS "trabajoId", t."codigo", t."titulo"
+     FROM public."sustentaciones" s
+     JOIN "trabajos" t ON t."id" = s."trabajoId"
+     LEFT JOIN hu6."salas" sa ON sa."id" = s."salaId"
+     WHERE t."periodoId" = :periodoId AND s."estado" IN (:estados) AND s."fecha" >= :hoy
+     ORDER BY s."fecha" ASC, s."hora" ASC, s."id" ASC
+     LIMIT :limite`,
+    { periodoId, estados: SUSTENTACION_PENDIENTE, hoy, limite }
+  );
+  return filas.map((s) => ({
+    id: s.id,
+    fecha: s.fecha,
+    hora: s.hora,
+    modalidad: normalizarModalidad(s.modalidad),
+    estado: s.estado,
+    lugar: textoSala(s.salaId, s.ubicacion),
+    trabajo: { id: s.trabajoId, codigo: s.codigo, titulo: s.titulo },
+  }));
+}
+
 /** Sustentación del trabajo (HU-6 permite una por trabajo) con sala y jurado (presidente primero), o null. */
 export async function sustentacionDeTrabajo(trabajoId) {
   const [s] = await select(
