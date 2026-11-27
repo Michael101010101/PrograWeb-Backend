@@ -26,6 +26,8 @@ const db = {};
   require('./asesor.cjs'),
   require('./solicitud.cjs'),
   require('./historialAsesoria.cjs'),
+  require('./cupoAsesor.cjs'),
+  require('./mensaje.cjs'),
   // HU-4 · Plan de entregables
   require('./entregable.cjs'),
   require('./avance.cjs'),

@@ -1,0 +1,52 @@
+{
+  "_contrato": "Semilla mínima de HU-7 sobre los datos de main (HU-1, HU-2, HU-3). Solo inserta filas propias: 4 usuarios u-70x, 1 cupo ca-701 y 2 mensajes m-70x. Las fechas son desfases en días respecto del día en que se corre (negativo = pasado). Contraseña de las cuentas nuevas: la misma del seed de HU-1 (Tfc2026!).",
+  "referencias": { "coordinador": "u-201", "periodoActual": "2026-2" },
+
+  "usuarios": [
+    {
+      "id": "u-701", "rol": "estudiante", "estado": "bloqueado",
+      "nombres": "Renzo Alonso", "apellidos": "Paredes Lazo", "correo": "rparedes@aloe.ulima.edu.pe", "telefono": "",
+      "carrera": "Ingeniería de Sistemas", "ciclo": "Octavo", "codigoAlumno": "20227001",
+      "creadoDias": -110, "ultimoIngresoDias": -30,
+      "motivoBloqueo": "Bloqueo preventivo: se detectaron ingresos simultáneos desde equipos de terceros durante la entrega de avances."
+    },
+    {
+      "id": "u-702", "rol": "asesor", "estado": "pendiente_validacion",
+      "nombres": "Patricia", "apellidos": "Salinas Herrera", "correo": "psalinas@ulima.edu.pe", "telefono": "",
+      "gradoAcademico": "Doctor", "departamento": "Ingeniería de Sistemas",
+      "creadoDias": -3, "ultimoIngresoDias": null
+    },
+    {
+      "id": "u-703", "rol": "estudiante", "estado": "activo",
+      "nombres": "Lucía Fernanda", "apellidos": "Huamán Castillo", "correo": "lhuaman@aloe.ulima.edu.pe", "telefono": "987112233",
+      "carrera": "Ingeniería Civil", "ciclo": "Décimo", "codigoAlumno": "20227003",
+      "creadoDias": -265, "ultimoIngresoDias": -3
+    },
+    {
+      "id": "u-704", "rol": "estudiante", "estado": "sin_verificar",
+      "nombres": "Tomás", "apellidos": "Villanueva Ruiz", "correo": "tvillanueva@aloe.ulima.edu.pe", "telefono": "",
+      "carrera": "Ingeniería Industrial", "ciclo": "Octavo", "codigoAlumno": "20227004",
+      "creadoDias": -2, "ultimoIngresoDias": null
+    }
+  ],
+
+  "cuposAsesor": [
+    {
+      "id": "ca-701", "asesorId": "a-07", "periodo": "2026-2", "cupoAnterior": 5, "cupoMaximo": 6, "creadoDias": -60,
+      "motivo": "Ampliación aprobada por la coordinación para atender un trabajo adicional de Ciencia de datos aplicada."
+    }
+  ],
+
+  "mensajes": [
+    {
+      "id": "m-701", "asesorId": "a-07", "trabajoId": "t-047", "creadoDias": -5, "leido": true,
+      "asunto": "Avances pendientes de revisión",
+      "cuerpo": "Estimada profesora Quispe: el tablero muestra avances sin revisar en el trabajo TFC-2026-2-047. Le agradeceré revisarlos esta semana."
+    },
+    {
+      "id": "m-702", "asesorId": "a-02", "trabajoId": null, "creadoDias": -1, "leido": false,
+      "asunto": "Cupo del periodo 2026-2",
+      "cuerpo": "Estimado profesor: le escribimos para confirmar su disponibilidad de cupo para el periodo 2026-2 antes del cierre de asignaciones."
+    }
+  ]
+}
