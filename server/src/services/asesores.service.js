@@ -153,23 +153,58 @@ export async function actualizarFicha(usuarioId, datos = {}) {
 
 /* ─────────── Mis asesorados (asesor) ─────────── */
 
+/**
+ * Agrega a cada trabajo su avance real y arma la lista de vencimientos, con los entregables de la HU-4:
+ *  - avance (%) = peso de los entregables aprobados × 100 / peso total del plan
+ *    (sin plan: 0 %, o 100 % si el trabajo ya concluyó)
+ *  - vencimientos = entregables que aún no están aprobados, del más cercano al más lejano
+ */
+async function conEntregables(lista) {
+  const entregables = await trabajos.entregablesDeTrabajos(lista.map((t) => t.id));
+
+  const trabajosConAvance = lista.map((t) => {
+    const propios = entregables.filter((e) => e.trabajoId === t.id);
+    const pesoTotal = propios.reduce((suma, e) => suma + e.peso, 0);
+    const pesoAprobado = propios.filter((e) => e.estado === 'aprobado').reduce((suma, e) => suma + e.peso, 0);
+    let avance = pesoTotal ? Math.round((pesoAprobado * 100) / pesoTotal) : 0;
+    if (!pesoTotal && t.estado === 'concluido') avance = 100;
+    return { ...t, avance };
+  });
+
+  const vencimientos = entregables
+    .filter((e) => e.estado !== 'aprobado')
+    .map((e) => {
+      const trabajo = lista.find((t) => t.id === e.trabajoId);
+      return {
+        trabajoCodigo: trabajo.codigo,
+        tituloTrabajo: trabajo.titulo,
+        entregable: `${e.orden}. ${e.nombre}`,
+        fecha: e.fechaLimite,
+        peso: e.peso,
+      };
+    })
+    .sort((a, b) => String(a.fecha).localeCompare(String(b.fecha)));
+
+  return { trabajos: trabajosConAvance, vencimientos };
+}
+
 export async function misAsesorados(usuarioId) {
   const asesor = await asesorDelUsuario(usuarioId);
-  const lista = await trabajos.listarDeAsesor(asesor.id);
+  const { trabajos: lista, vencimientos } = await conEntregables(await trabajos.listarDeAsesor(asesor.id));
   return {
     trabajos: lista,
     avancesPorRevisar: lista.reduce((suma, t) => suma + t.porRevisar, 0),
-    // HU-4: los entregables con fecha límite llegarán cuando exista su tabla
-    vencimientos: [],
+    vencimientos,
   };
 }
 
 export async function asesorado(usuarioId, codigo) {
   const asesor = await asesorDelUsuario(usuarioId);
-  const trabajo = await trabajos.buscarPorCodigo(codigo);
+  const encontrado = await trabajos.buscarPorCodigo(codigo);
   // Un asesor solo puede ver los trabajos que tiene a cargo
-  if (!trabajo || trabajo.asesorId !== asesor.id) throw new HttpError(404, `El trabajo ${codigo} no está a tu cargo.`);
-  return { trabajo, vencimientos: [] };
+  if (!encontrado || encontrado.asesorId !== asesor.id) throw new HttpError(404, `El trabajo ${codigo} no está a tu cargo.`);
+  const { trabajos: [trabajo], vencimientos } = await conEntregables([encontrado]);
+  return { trabajo, vencimientos };
 }
 
 export async function terminarAsesoria(usuarioId, codigo, motivoIngresado) {
