@@ -1,15 +1,25 @@
-import db from '../db/models/index.cjs';
+import { models } from '../config/database.js';
+import RepositoryBase from './RepositoryBase.js';
 
-// Patrón Repository sobre Periodo y Etapa (Sequelize).
+// Periodo académico con sus etapas (asociación Periodo hasMany Etapa).
 
-const { Periodo, Etapa } = db;
+class PeriodoRepository extends RepositoryBase {
+  constructor() {
+    super(models.Periodo);
+  }
 
-/** Periodo marcado como activo, con sus etapas ordenadas. */
-export async function buscarActivo() {
-  const periodo = await Periodo.findOne({
-    where: { activo: true },
-    include: [{ model: Etapa, as: 'etapas' }],
-    order: [[{ model: Etapa, as: 'etapas' }, 'numero', 'ASC']],
-  });
-  return periodo ? periodo.get({ plain: true }) : null;
+  /** Periodo marcado como activo, con sus etapas ordenadas. */
+  buscarActivo() {
+    return this.buscarUno(
+      { activo: true },
+      {
+        include: [{ model: models.Etapa, as: 'etapas' }],
+        order: [[{ model: models.Etapa, as: 'etapas' }, 'numero', 'ASC']],
+      }
+    );
+  }
 }
+
+const repo = new PeriodoRepository();
+
+export const buscarActivo = () => repo.buscarActivo();

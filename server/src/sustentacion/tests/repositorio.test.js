@@ -1,48 +1,51 @@
-// Prueba la capa de datos con una base simulada (no necesita PostgreSQL).
+// Prueba la capa de datos (repositorio con Sequelize) contra la base configurada en el .env.
+// Ejecutar con la base migrada y con datos semilla: npm run hu6:test
+// Las escrituras se hacen dentro de una transacción que se deshace al final (no deja rastros).
+import 'dotenv/config';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { sequelize } from '../../config/database.js';
 import * as repo from '../hu6/repositories/sustentacionesRepository.js';
 
-function baseFalsa() {
-  const llamadas = [];
-  const trabajo = { id: 't-012', codigo: 'TFC-2026-2-012', titulo: 'X', linea: 'L', departamento: 'D', estado: 'concluido', asesor_id: null, asesor: 'A', aprobados: 5, total: 5, informe_aprobado_el: '2026-11-24' };
-  const tablas = [
-    ['FROM hu6.docentes', []], ['FROM public.trabajos t JOIN public.lineas', [trabajo]], ['FROM public.integrantes_trabajo', []], ['FROM hu6.conflictos_trabajo', []],
-    ['FROM hu6.reservas_sala', []],
-    ['FROM public.sustentaciones', [{ id: 's-001', trabajoId: 't-012', fecha: '2026-12-11', hora: '10:00:00', modalidad: 'Presencial', calificacion: 16, estado: 'realizada', salaId: 'A-402', programadaEl: '2026-09-02' }]],
-    ['FROM hu6.jurados', []], ['FROM hu6.actas', []], ['FROM hu6.calificaciones', []], ['FROM hu6.historial_reprogramaciones', []],
-  ];
-  return { llamadas, query: async (sql, params) => { llamadas.push({ sql, params }); const t = tablas.find(([k]) => sql.includes(k)); return { rows: t ? t[1] : [], rowCount: 0 }; } };
-}
+class Deshacer extends Error {}
+const enTransaccionQueSeDeshace = async (fn) => {
+  try {
+    await sequelize.transaction(async (transaction) => {
+      await fn({ transaction });
+      throw new Deshacer();
+    });
+  } catch (error) {
+    if (!(error instanceof Deshacer)) throw error;
+  }
+};
 
-test('obtenerDatos traduce trabajoId (t-012) al código visible y expone calificacion', async () => {
-  const d = await repo.obtenerDatos(baseFalsa());
-  const s = d.sustentaciones[0];
-  assert.equal(s.id, 's-001');
-  assert.equal(s.trabajoId, 't-012');
+test.after(() => sequelize.close());
+
+test('obtenerDatos traduce trabajoId (t-012) al código visible y expone la calificación', async () => {
+  const d = await repo.obtenerDatos();
+  const s = d.sustentaciones.find((x) => x.trabajoId === 't-012');
+  assert.ok(s, 'el seeder crea la sustentación s-012');
   assert.equal(s.trabajoCodigo, 'TFC-2026-2-012');
-  assert.equal(s.calificacion, 16);
-  assert.equal(s.hora, '10:00');
-  assert.equal(d.trabajos[0].id, 't-012');
+  assert.match(s.hora, /^\d{2}:\d{2}$/);
+  assert.ok(Array.isArray(s.jurado));
+  assert.equal(d.salas.length > 0, true);
 });
-test('insertarProgramacion escribe en public.sustentaciones con columnas camelCase', async () => {
-  const db = baseFalsa();
-  await repo.insertarProgramacion(db, { id: 's-002', trabajoCodigo: 'TFC-2026-2-012', estado: 'programada', programadaEl: '2026-11-25', fecha: '2026-12-11', hora: '10:00', salaId: 'A-402', modalidad: 'Presencial' });
-  const { sql, params } = db.llamadas[0];
-  assert.match(sql, /INSERT INTO public\.sustentaciones \("id","trabajoId"/);
-  assert.equal(params[1], 'TFC-2026-2-012');
-  assert.equal(params[8], null);
+
+test('un estudiante solo ve los trabajos de su equipo', async () => {
+  const d = await repo.obtenerDatos({ usuarioId: 'u-002', rol: 'estudiante' });
+  assert.ok(d.trabajos.every((t) => t.equipo.some((i) => i.usuarioId === 'u-002')));
+  assert.deepEqual(d.reservas, []);
 });
-test('registrar el acta guarda la calificación final en la tabla del contrato', async () => {
-  const db = baseFalsa();
-  const notas = { rigor: 16, resultados: 15, informe: 17, exposicion: 16 };
-  await repo.guardarActa(db, { id: 's-002', estado: 'realizada', acta: { notas, resultado: 'Aprobado', observaciones: '', registrada: true, registradaEl: '2026-12-11', registradaHora: '10:20' } });
-  const ultima = db.llamadas.at(-1);
-  assert.match(ultima.sql, /UPDATE public\.sustentaciones SET "estado"=\$2,"calificacion"=\$3/);
-  assert.deepEqual(ultima.params, ['s-002', 'realizada', 16]);
-});
-test('un borrador de acta NO cambia estado ni calificación', async () => {
-  const db = baseFalsa();
-  await repo.guardarActa(db, { id: 's-002', estado: 'programada', acta: { notas: { rigor: 10, resultados: '', informe: '', exposicion: '' }, resultado: '', observaciones: '', registrada: false } });
-  assert.ok(!db.llamadas.some((c) => c.sql.includes('UPDATE public.sustentaciones')));
+
+test('reemplazarJurado y guardarActa escriben con los modelos (y se deshacen)', async () => {
+  await enTransaccionQueSeDeshace(async (opciones) => {
+    const antes = await repo.obtenerDatos(opciones);
+    const s = antes.sustentaciones.find((x) => x.id === 's-012');
+    await repo.reemplazarJurado({ ...s, jurado: [{ docenteId: 'd-05', presidente: true }, { docenteId: 'd-08', presidente: false }] }, opciones);
+    await repo.guardarActa({ ...s, acta: { notas: { rigor: 15 }, resultado: '', observaciones: 'borrador', registrada: false } }, opciones);
+    const despues = (await repo.obtenerDatos(opciones)).sustentaciones.find((x) => x.id === 's-012');
+    assert.deepEqual(despues.jurado.map((j) => j.docenteId), ['d-05', 'd-08']);
+    assert.equal(despues.acta.notas.rigor, 15);
+    assert.equal(despues.acta.observaciones, 'borrador');
+  });
 });

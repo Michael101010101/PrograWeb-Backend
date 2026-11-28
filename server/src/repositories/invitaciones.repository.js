@@ -1,11 +1,11 @@
 import { Op } from 'sequelize';
-import db from '../db/models/index.cjs';
+import { models } from '../config/database.js';
+import RepositoryBase from './RepositoryBase.js';
 import { generarCodigoInvitacion } from '../utils/aleatorio.js';
 
-const { Invitacion } = db;
-const VIGENCIA_DIAS = 7;
+// Invitaciones para crear cuentas de coordinación.
 
-const aObjeto = (instancia) => (instancia ? instancia.get({ plain: true }) : null);
+const VIGENCIA_DIAS = 7;
 
 export function estadoDe(inv) {
   if (inv.revocada) return 'revocada';
@@ -14,38 +14,39 @@ export function estadoDe(inv) {
   return 'vigente';
 }
 
-export async function listar() {
-  const filas = await Invitacion.findAll({ order: [['creadaEn', 'DESC']] });
-  return filas.map(aObjeto);
-}
+class InvitacionRepository extends RepositoryBase {
+  constructor() {
+    super(models.Invitacion);
+  }
 
-export async function buscarPorCodigo(codigo) {
-  return aObjeto(await Invitacion.findByPk(String(codigo ?? '').trim().toUpperCase()));
-}
+  listar() {
+    return this.buscarTodos({ order: [['creadaEn', 'DESC']] });
+  }
 
-export async function buscarVigentePorCorreo(correo) {
-  return aObjeto(
-    await Invitacion.findOne({
-      where: { correo, usada: false, revocada: false, venceEn: { [Op.gt]: new Date() } },
-    })
-  );
-}
+  buscarPorCodigo(codigo) {
+    return this.buscarPorId(String(codigo ?? '').trim().toUpperCase());
+  }
 
-export async function crear({ correo, invitadoPor }) {
-  return aObjeto(
-    await Invitacion.create({
+  buscarVigentePorCorreo(correo) {
+    return this.buscarUno({ correo, usada: false, revocada: false, venceEn: { [Op.gt]: new Date() } });
+  }
+
+  crearNueva({ correo, invitadoPor }) {
+    return this.crear({
       codigo: generarCodigoInvitacion(),
       correo,
       invitadoPor,
       venceEn: new Date(Date.now() + VIGENCIA_DIAS * 86400000),
-    })
-  );
+    });
+  }
 }
 
-export async function marcarUsada(codigo, usuarioId) {
-  await Invitacion.update({ usada: true, usadaPor: usuarioId, usadaEn: new Date() }, { where: { codigo } });
-}
+const repo = new InvitacionRepository();
 
-export async function revocar(codigo) {
-  await Invitacion.update({ revocada: true }, { where: { codigo } });
-}
+export const listar = () => repo.listar();
+export const buscarPorCodigo = (codigo) => repo.buscarPorCodigo(codigo);
+export const buscarVigentePorCorreo = (correo) => repo.buscarVigentePorCorreo(correo);
+export const crear = (datos) => repo.crearNueva(datos);
+export const marcarUsada = (codigo, usuarioId) =>
+  repo.actualizarDonde({ usada: true, usadaPor: usuarioId, usadaEn: new Date() }, { codigo });
+export const revocar = (codigo) => repo.actualizarDonde({ revocada: true }, { codigo });
