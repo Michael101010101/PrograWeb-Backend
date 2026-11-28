@@ -203,6 +203,7 @@ export async function misDatos(usuario) {
       estado: datos.trabajo.estado,
       responsableId: completo?.integrantes?.find((i) => i.responsable)?.usuarioId,
       integrantes: datos.trabajo.integrantes,
+      equipo: (completo?.integrantes ?? []).map((i) => ({ usuarioId: i.usuarioId, nombre: i.nombre, responsable: Boolean(i.responsable) })),
       asesor: datos.trabajo.asesor && { ...datos.trabajo.asesor, id: datos.trabajo.asesor.usuarioId },
     });
     for (const e of datos.entregables) {
