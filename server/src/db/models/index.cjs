@@ -35,6 +35,16 @@ const db = {};
   require('./requisito.cjs'),
   // HU-5 · Revisión y retroalimentación
   require('./comentarioAvance.cjs'),
+  // HU-6 · Sustentación
+  require('./docente.cjs'),
+  require('./sala.cjs'),
+  require('./reservaSala.cjs'),
+  require('./conflictoTrabajo.cjs'),
+  require('./sustentacion.cjs'),
+  require('./jurado.cjs'),
+  require('./acta.cjs'),
+  require('./calificacion.cjs'),
+  require('./reprogramacion.cjs'),
 ].forEach((definir) => {
   const modelo = definir(sequelize, Sequelize.DataTypes);
   db[modelo.name] = modelo;

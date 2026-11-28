@@ -22,8 +22,10 @@ router.post('/sustentaciones/:id/acta/registrar', soloCoordinacion, responder(ct
 router.use((error, _req, _res, next) => {
   if (error instanceof HttpError) return next(error);
   if (error.status >= 400 && error.status < 500) return next(new HttpError(error.status, error.message));
-  if (error.code === '23505') return next(new HttpError(409, 'El registro ya existe.'));
-  if (['23503', '23514'].includes(error.code)) return next(new HttpError(400, 'Los datos no cumplen las restricciones.'));
+  // Errores de Sequelize: el código de PostgreSQL viene en error.parent.code.
+  const codigo = error.parent?.code ?? error.code;
+  if (error.name === 'SequelizeUniqueConstraintError' || codigo === '23505') return next(new HttpError(409, 'El registro ya existe.'));
+  if (error.name === 'SequelizeValidationError' || ['23503', '23514'].includes(codigo)) return next(new HttpError(400, 'Los datos no cumplen las restricciones.'));
   next(error);
 });
 export default router;

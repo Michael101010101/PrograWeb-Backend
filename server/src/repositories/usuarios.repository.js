@@ -1,53 +1,51 @@
 import { Op } from 'sequelize';
-import db from '../db/models/index.cjs';
+import { models } from '../config/database.js';
+import RepositoryBase from './RepositoryBase.js';
 
 // Patrón Repository sobre el modelo Usuario (Sequelize).
 // Es el único lugar que lee y escribe la tabla usuarios; los servicios no conocen Sequelize.
 
-const { Usuario } = db;
-
-/** Convierte la instancia de Sequelize en un objeto simple del contrato de datos. */
-function aObjeto(instancia) {
-  if (!instancia) return null;
-  // eslint-disable-next-line no-unused-vars
-  const { actualizadoEn, ...datos } = instancia.get({ plain: true });
-  return datos;
-}
-
-export async function buscarPorId(id) {
-  return aObjeto(await Usuario.findByPk(id));
-}
-
-export async function buscarPorCorreo(correo) {
-  return aObjeto(await Usuario.findOne({ where: { correo: String(correo ?? '').trim().toLowerCase() } }));
-}
-
-export async function buscarPorCodigoAlumno(codigoAlumno) {
-  return aObjeto(await Usuario.findOne({ where: { codigoAlumno } }));
-}
-
-export async function crear(datos) {
-  return aObjeto(await Usuario.create(datos));
-}
-
-export async function actualizar(id, cambios) {
-  const usuario = await Usuario.findByPk(id);
-  if (!usuario) return null;
-  await usuario.update(cambios);
-  return aObjeto(usuario);
-}
-
-/** Para la HU-7: listado con filtros simples (rol, estado, búsqueda por nombre o correo). */
-export async function listar({ rol, estado, buscar } = {}) {
-  const where = {};
-  if (rol) where.rol = rol;
-  if (estado) where.estado = estado;
-  if (buscar) {
-    where[Op.or] = ['nombres', 'apellidos', 'correo'].map((campo) => ({ [campo]: { [Op.iLike]: `%${buscar}%` } }));
+class UsuarioRepository extends RepositoryBase {
+  constructor() {
+    super(models.Usuario);
   }
-  const filas = await Usuario.findAll({ where, order: [['apellidos', 'ASC']] });
-  return filas.map(aObjeto);
+
+  /** No expone la columna técnica actualizadoEn. */
+  aObjeto(instancia) {
+    if (!instancia) return null;
+    // eslint-disable-next-line no-unused-vars
+    const { actualizadoEn, ...datos } = instancia.get({ plain: true });
+    return datos;
+  }
+
+  buscarPorCorreo(correo) {
+    return this.buscarUno({ correo: String(correo ?? '').trim().toLowerCase() });
+  }
+
+  buscarPorCodigoAlumno(codigoAlumno) {
+    return this.buscarUno({ codigoAlumno });
+  }
+
+  /** Para la HU-7: listado con filtros simples (rol, estado, búsqueda por nombre o correo). */
+  listar({ rol, estado, buscar } = {}) {
+    const where = {};
+    if (rol) where.rol = rol;
+    if (estado) where.estado = estado;
+    if (buscar) {
+      where[Op.or] = ['nombres', 'apellidos', 'correo'].map((campo) => ({ [campo]: { [Op.iLike]: `%${buscar}%` } }));
+    }
+    return this.buscarTodos({ where, order: [['apellidos', 'ASC']] });
+  }
 }
+
+const repo = new UsuarioRepository();
+
+export const buscarPorId = (id, opciones) => repo.buscarPorId(id, opciones);
+export const buscarPorCorreo = (correo) => repo.buscarPorCorreo(correo);
+export const buscarPorCodigoAlumno = (codigo) => repo.buscarPorCodigoAlumno(codigo);
+export const crear = (datos, opciones) => repo.crear(datos, opciones);
+export const actualizar = (id, cambios, opciones) => repo.actualizar(id, cambios, opciones);
+export const listar = (filtros) => repo.listar(filtros);
 
 /** Versión pública del usuario: nunca devuelve el hash de la contraseña. */
 export function sinSecretos(usuario) {

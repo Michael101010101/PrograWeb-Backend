@@ -1,16 +1,21 @@
-import db from '../db/models/index.cjs';
+import { models } from '../config/database.js';
+import RepositoryBase from './RepositoryBase.js';
 
-const { IntentoLogin } = db;
+// Intentos fallidos de inicio de sesión (bloqueo temporal).
 
-export async function obtener(correo) {
-  const registro = await IntentoLogin.findByPk(correo);
-  return { fallidos: registro?.fallidos ?? 0, bloqueadoHasta: registro?.bloqueadoHasta ?? null };
+class IntentoLoginRepository extends RepositoryBase {
+  constructor() {
+    super(models.IntentoLogin);
+  }
+
+  async obtener(correo) {
+    const registro = await this.buscarPorId(correo);
+    return { fallidos: registro?.fallidos ?? 0, bloqueadoHasta: registro?.bloqueadoHasta ?? null };
+  }
 }
 
-export async function guardar(correo, { fallidos, bloqueadoHasta }) {
-  await IntentoLogin.upsert({ correo, fallidos, bloqueadoHasta });
-}
+const repo = new IntentoLoginRepository();
 
-export async function limpiar(correo) {
-  await IntentoLogin.destroy({ where: { correo } });
-}
+export const obtener = (correo) => repo.obtener(correo);
+export const guardar = (correo, { fallidos, bloqueadoHasta }) => repo.crearOActualizar({ correo, fallidos, bloqueadoHasta });
+export const limpiar = (correo) => repo.eliminarDonde({ correo });
